@@ -28,7 +28,5 @@ $factory->define(CodeProject\Client::class, function (Faker\Generator $faker) {
         'phone' => $faker->phoneNumber,
         'address' => $faker->address,
         'obs' => $faker->sentence,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
     ];
 });
