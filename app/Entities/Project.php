@@ -22,6 +22,11 @@ class Project extends Model implements Transformable
         'updated_at',
     ];
 
+    protected $hidden = [
+        'owner_id',
+        'client_id',
+    ];
+
     public function owner()
     {
         return $this->belongsTo('CodeProject\Entities\User', 'owner_id', 'id');

@@ -37,7 +37,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return $this->repository->with(['owner', 'client'])->all();
+        #hidden não está funcionando
+        return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client'])->all();
     }
 
     /**
