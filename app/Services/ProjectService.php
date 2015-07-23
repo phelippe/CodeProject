@@ -83,7 +83,7 @@ class ProjectService
         try {
             $this->repository->delete($id);
             #acento aqui funcionou normal
-            return "Usuário {$id} deletado com sucesso";
+            return "Projeto id:{$id} deletado com sucesso";
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
