@@ -35,7 +35,7 @@ $factory->define(CodeProject\Entities\Client::class, function (Faker\Generator $
 $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator $faker) {
     return [
         'owner_id' => \CodeProject\Entities\User::all()->lists('id')->random(1),
-        'client_id' => \CodeProject\Entities\User::all()->lists('id')->random(1),
+        'client_id' => \CodeProject\Entities\Client::all()->lists('id')->random(1),
         'name' => $faker->name,
         'description' => $faker->sentence,
         'progress' => $faker->biasedNumberBetween,

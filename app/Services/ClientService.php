@@ -11,6 +11,7 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ClientRepository;
 use CodeProject\Validators\ClientValidator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ClientService
@@ -28,6 +29,17 @@ class ClientService
     public function __construct(ClientRepository $repository, ClientValidator $validator){
         $this->repository = $repository;
         $this->validator = $validator;
+    }
+
+    public function show($id){
+        try {
+            return $this->repository->find($id);
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'Usuario não existe',
+            ];
+        }
     }
 
     public function create(array $data){
@@ -53,6 +65,24 @@ class ClientService
             return [
                 'error' => true,
                 'message' => $e->getMessageBag(),
+            ];
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'Usuario que está tentando atualizar não existe',
+            ];
+        }
+    }
+
+    public function destroy($id){
+        try {
+            $this->repository->delete($id);
+            #acento aqui funcionou normal
+            return "Usuário {$id} deletado com sucesso";
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'Usuario que está tentando deletar não existe',
             ];
         }
     }

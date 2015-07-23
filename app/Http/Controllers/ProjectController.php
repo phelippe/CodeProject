@@ -39,7 +39,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        #hidden não está funcionando
+        #hidden nï¿½o estï¿½ funcionando
         return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client'])->all();
     }
 
@@ -62,15 +62,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        try {
-            return $this->repository->find($id);
-            return 'deletado com sucesso';
-        } catch(ModelNotFoundException $e){
-            return [
-                'error' => true,
-                'message' => 'Usuario não encontrado',
-            ];
-        }
+        return $this->service->show($id);
     }
 
     /**
@@ -93,15 +85,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        return $this->repository->delete($id);
-        /*try {
-            $this->repository->delete($id);
-            return 'deletado com sucesso';
-        } catch(Excepti $e){
-            return [
-                'error' => true,
-                'message' => $e->getMessageBag(),
-            ];
-        }*/
+        return $this->service->destroy($id);
     }
 }

@@ -34,7 +34,7 @@ class Project extends Model implements Transformable
 
     public function client()
     {
-        return $this->belongsTo('CodeProject\Entities\User', 'client_id', 'id');
+        return $this->belongsTo('CodeProject\Entities\Client', 'client_id', 'id');
     }
 
 }

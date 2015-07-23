@@ -11,6 +11,7 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectValidator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectService
@@ -33,6 +34,17 @@ class ProjectService
     public function __construct(ProjectRepository $repository, ProjectValidator $validator){
         $this->repository = $repository;
         $this->validator = $validator;
+    }
+
+    public function show($id){
+        try {
+            return $this->repository->find($id);
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'Projeto não existe',
+            ];
+        }
     }
 
     public function create(array $data){
@@ -58,6 +70,24 @@ class ProjectService
             return [
                 'error' => true,
                 'message' => $e->getMessageBag(),
+            ];
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'O Projeto que está tentando atualizar não existe',
+            ];
+        }
+    }
+
+    public function destroy($id){
+        try {
+            $this->repository->delete($id);
+            #acento aqui funcionou normal
+            return "Usuário {$id} deletado com sucesso";
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'O Projeto que está tentando deletar não existe',
             ];
         }
     }

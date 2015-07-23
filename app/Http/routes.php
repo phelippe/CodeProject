@@ -22,7 +22,7 @@ Route::put('client/{id}', 'ClientController@update');
 Route::delete('client/{id}', 'ClientController@destroy');
 
 /*Route::get('project', function(){
-    return \CodeProject\Entities\User::all()->lists('id')->random(1);
+    return \CodeProject\Entities\Client::all()->lists('id')->random(1);
 });*/
 Route::get('project', 'ProjectController@index');
 Route::post('project', 'ProjectController@store');
