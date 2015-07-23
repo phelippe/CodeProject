@@ -4,10 +4,12 @@ namespace CodeProject\Http\Controllers;
 
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use CodeProject\Http\Requests;
 use CodeProject\Http\Controllers\Controller;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectController extends Controller
 {
@@ -60,7 +62,15 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->find($id);
+        try {
+            return $this->repository->find($id);
+            return 'deletado com sucesso';
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'Usuario não encontrado',
+            ];
+        }
     }
 
     /**
@@ -84,5 +94,14 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         return $this->repository->delete($id);
+        /*try {
+            $this->repository->delete($id);
+            return 'deletado com sucesso';
+        } catch(Excepti $e){
+            return [
+                'error' => true,
+                'message' => $e->getMessageBag(),
+            ];
+        }*/
     }
 }
