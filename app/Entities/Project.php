@@ -37,4 +37,7 @@ class Project extends Model implements Transformable
         return $this->belongsTo('CodeProject\Entities\Client', 'client_id', 'id');
     }
 
+    public function notes(){
+        return $this->hasMany(ProjectNote::class);
+    }
 }

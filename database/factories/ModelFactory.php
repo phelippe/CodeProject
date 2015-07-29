@@ -31,7 +31,6 @@ $factory->define(CodeProject\Entities\Client::class, function (Faker\Generator $
     ];
 });
 
-
 $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator $faker) {
     return [
         'owner_id' => \CodeProject\Entities\User::all()->lists('id')->random(1),
@@ -41,5 +40,13 @@ $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator 
         'progress' => $faker->biasedNumberBetween,
         'status' => $faker->word,
         'due_date' => $faker->dateTime,
+    ];
+});
+
+$factory->define(CodeProject\Entities\ProjectNote::class, function (Faker\Generator $faker) {
+    return [
+        'project_id' => \CodeProject\Entities\Project::all()->lists('id')->random(1),
+        'title' => $faker->word,
+        'note' => $faker->paragraph,
     ];
 });
