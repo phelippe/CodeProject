@@ -2,31 +2,28 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Services\ProjectService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Services\ProjectTaskService;
 use Illuminate\Http\Request;
 
 use CodeProject\Http\Requests;
-use CodeProject\Http\Controllers\Controller;
-use Prettus\Validator\Exceptions\ValidatorException;
 
-class ProjectController extends Controller
+class ProjectTaskController extends Controller
 {
     /**
-     * @var ProjectService
+     * @var ProjectTaskService
      */
     private $service;
     /**
-     * @var ProjectRepository
+     * @var ProjectTaskRepository
      */
     private $repository;
 
     /**
-     * @param ProjectService $service
-     * @param ProjectRepository $repository
+     * @param ProjectTaskService $service
+     * @param ProjectTaskRepository $repository
      */
-    public function __construct(ProjectService $service, ProjectRepository $repository){
+    public function __construct(ProjectTaskService $service, ProjectTaskRepository $repository){
 
         $this->service = $service;
         $this->repository = $repository;
@@ -39,8 +36,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        #hidden n�o est� funcionando
-        return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client'])->all();
+        return $this->repository->all();
     }
 
     /**
@@ -63,11 +59,6 @@ class ProjectController extends Controller
     public function show($id)
     {
         return $this->service->show($id);
-    }
-
-    public function listMembers($id)
-    {
-        return $this->service->show($id)->with('members');
     }
 
     /**

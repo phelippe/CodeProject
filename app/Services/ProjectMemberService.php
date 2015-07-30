@@ -9,41 +9,40 @@
 namespace CodeProject\Services;
 
 
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Validators\ProjectValidator;
+use CodeProject\Repositories\ProjectMemberRepository;
+use CodeProject\Validators\ProjectMemberValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Mockery\CountValidator\Exception;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class ProjectService
+class ProjectMemberService
 {
 
 
     /**
-     * @var ProjectRepository
+     * @var ProjectMemberRepository
      */
     private $repository;
     /**
-     * @var ProjectService
+     * @var ProjectMemberService
      */
     private $validator;
 
     /**
-     * @param ProjectRepository $repository
-     * @param ProjectService $service
+     * @param ProjectMemberRepository $repository
+     * @param ProjectMemberService $service
      */
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator){
+    public function __construct(ProjectMemberRepository $repository, ProjectMemberValidator $validator){
         $this->repository = $repository;
         $this->validator = $validator;
     }
 
     public function show($id){
         try {
-            return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client', 'notes'])->find($id);
+            return $this->repository->hidden(['project_id'])->with(['project'])->find($id);
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
-                'message' => 'Projeto não existe',
+                'message' => 'Usuario não existe',
             ];
         }
     }
@@ -51,7 +50,6 @@ class ProjectService
     public function create(array $data){
         // enviar email
         // disparar notificacao
-        // postar tweet
         try {
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);
@@ -75,7 +73,7 @@ class ProjectService
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
-                'message' => 'O Projeto que está tentando atualizar não existe',
+                'message' => 'Não foi possível atualizar',
             ];
         }
     }
@@ -84,32 +82,12 @@ class ProjectService
         try {
             $this->repository->delete($id);
             #acento aqui funcionou normal
-            return "Projeto id:{$id} deletado com sucesso";
+            return "Nota id:{$id} deletado com sucesso";
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
-                'message' => 'O Projeto que está tentando deletar não existe',
+                'message' => 'O usuário que está tentando desvincular não existe',
             ];
         }
-    }
-
-    public function addMember($id_user, $id_project){
-        try{
-
-        } catch(Exception $e){
-            return 'erro:'.$e;
-        }
-    }
-
-    public function removeMember($id_user, $id_project){
-        try{
-
-        } catch(Exception $e){
-            return 'erro:'.$e;
-        }
-    }
-
-    public function isMember($id_user, $id_project){
-        return 'isMember';
     }
 }

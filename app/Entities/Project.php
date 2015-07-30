@@ -40,4 +40,8 @@ class Project extends Model implements Transformable
     public function notes(){
         return $this->hasMany(ProjectNote::class);
     }
+
+    public function members(){
+        return $this->hasMany(ProjectMember::class);
+    }
 }

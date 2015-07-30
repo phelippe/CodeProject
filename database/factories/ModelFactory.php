@@ -50,3 +50,20 @@ $factory->define(CodeProject\Entities\ProjectNote::class, function (Faker\Genera
         'note' => $faker->paragraph,
     ];
 });
+
+$factory->define(CodeProject\Entities\ProjectTask::class, function (Faker\Generator $faker) {
+    return [
+        'project_id' => \CodeProject\Entities\Project::all()->lists('id')->random(1),
+        'name' => $faker->word,
+        'start_date' => $faker->dateTime,
+        'due_date' => $faker->dateTime,
+        'status' => $faker->word,
+    ];
+});
+
+$factory->define(CodeProject\Entities\ProjectMember::class, function (Faker\Generator $faker) {
+    return [
+        'project_id' => \CodeProject\Entities\Project::all()->lists('id')->random(1),
+        'user_id' => \CodeProject\Entities\User::all()->lists('id')->random(1),
+    ];
+});
