@@ -34,9 +34,9 @@ class ProjectTaskController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($id_project)
     {
-        return $this->repository->all();
+        return $this->repository->hidden(['project_id'])->findByField('project_id', $id_project);
     }
 
     /**

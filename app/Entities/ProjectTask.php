@@ -18,4 +18,7 @@ class ProjectTask extends Model implements Transformable
 		'status',
 	];
 
+	public function project(){
+		return $this->belongsTo(Project::class);
+	}
 }

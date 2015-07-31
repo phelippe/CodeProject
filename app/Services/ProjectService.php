@@ -9,6 +9,7 @@
 namespace CodeProject\Services;
 
 
+use CodeProject\Repositories\ProjectMemberRepository;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -27,19 +28,38 @@ class ProjectService
      * @var ProjectService
      */
     private $validator;
+    /**
+     * @var ProjectMemberRepository
+     */
+    private $project_member_repository;
 
     /**
      * @param ProjectRepository $repository
-     * @param ProjectService $service
+     * @param ProjectValidator $validator
+     * @param ProjectMemberRepository $project_member_repository
+     * @internal param ProjectService $service
      */
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator){
+    public function __construct(ProjectRepository $repository, ProjectValidator $validator, ProjectMemberRepository $project_member_repository){
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->project_member_repository = $project_member_repository;
     }
 
     public function show($id){
         try {
+            //hidden nao funciona
             return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client', 'notes'])->find($id);
+        } catch(ModelNotFoundException $e){
+            return [
+                'error' => true,
+                'message' => 'Projeto não existe',
+            ];
+        }
+    }
+
+    public function listMembers($id_project){
+        try {
+            return $this->repository->with(['members'])->find($id_project);
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
@@ -93,9 +113,12 @@ class ProjectService
         }
     }
 
-    public function addMember($id_user, $id_project){
+    public function addMember(array $data){
         try{
+            /*$this->validator->with($data)->passesOrFail();
+            return $this->repository->create($data);*/
 
+            #$this->repository->create();
         } catch(Exception $e){
             return 'erro:'.$e;
         }

@@ -36,7 +36,7 @@ class ProjectMemberController extends Controller
      */
     public function index($id_project)
     {
-        return $this->repository->all();
+        return $this->repository->with(['user'])->findByField('project_id', $id_project);
     }
 
     /**
@@ -45,10 +45,10 @@ class ProjectMemberController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         return $this->service->create($request->all());
-    }
+    }*/
 
     /**
      * Display the specified resource.
@@ -56,10 +56,10 @@ class ProjectMemberController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    /*public function show($id)
     {
         return $this->service->show($id);
-    }
+    }*/
 
     /**
      * Update the specified resource in storage.
@@ -68,10 +68,10 @@ class ProjectMemberController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    /*public function update(Request $request, $id)
     {
         return $this->service->update($request->all(), $id);
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -79,8 +79,8 @@ class ProjectMemberController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    /*public function destroy($id)
     {
         return $this->service->destroy($id);
-    }
+    }*/
 }

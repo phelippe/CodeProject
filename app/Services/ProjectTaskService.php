@@ -38,7 +38,8 @@ class ProjectTaskService
 
     public function show($id){
         try {
-            return $this->repository->hidden(['project_id'])->with(['project'])->find($id);
+            #hidden não funciona
+            return $this->repository->hidden(['project_id'])->find($id);
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,

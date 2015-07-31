@@ -36,7 +36,7 @@ class ProjectMemberService
         $this->validator = $validator;
     }
 
-    public function show($id){
+    /*public function show($id){
         try {
             return $this->repository->hidden(['project_id'])->with(['project'])->find($id);
         } catch(ModelNotFoundException $e){
@@ -89,5 +89,5 @@ class ProjectMemberService
                 'message' => 'O usuário que está tentando desvincular não existe',
             ];
         }
-    }
+    }*/
 }

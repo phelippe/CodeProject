@@ -67,7 +67,7 @@ class ProjectController extends Controller
 
     public function listMembers($id)
     {
-        return $this->service->show($id)->with('members');
+        return $this->service->listMembers($id);
     }
 
     /**
