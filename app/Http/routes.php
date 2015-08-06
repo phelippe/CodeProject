@@ -36,6 +36,7 @@ Route::get('project/{id}/members', 'ProjectMemberController@index');
     #dd($ret);
     return $ret;
 });*/
+Route::post('project/{id}/members', 'ProjectMemberController@store');
 
 Route::get('project/note', 'ProjectNoteController@index');
 Route::post('project/note', 'ProjectNoteController@store');

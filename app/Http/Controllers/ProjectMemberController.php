@@ -39,4 +39,15 @@ class ProjectMemberController extends Controller
         return $this->service->index($id_project);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store($project_id, Request $request)
+    {
+        return $this->service->create($project_id, $request->all());
+    }
+
 }
