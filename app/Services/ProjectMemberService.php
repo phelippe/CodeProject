@@ -10,6 +10,7 @@ namespace CodeProject\Services;
 
 
 use CodeProject\Repositories\ProjectMemberRepository;
+use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectMemberValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -26,68 +27,25 @@ class ProjectMemberService
      * @var ProjectMemberService
      */
     private $validator;
+    /**
+     * @var ProjectRepository
+     */
+    private $user_repository;
 
     /**
      * @param ProjectMemberRepository $repository
-     * @param ProjectMemberService $service
+     * @param ProjectMemberValidator $validator
+     * @param ProjectRepository $project_repository
+     * @internal param ProjectMemberService $service
      */
-    public function __construct(ProjectMemberRepository $repository, ProjectMemberValidator $validator){
+    public function __construct(ProjectMemberRepository $repository, ProjectMemberValidator $validator, ProjectRepository $project_repository){
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->project_repository = $project_repository;
     }
 
-    /*public function show($id){
-        try {
-            return $this->repository->hidden(['project_id'])->with(['project'])->find($id);
-        } catch(ModelNotFoundException $e){
-            return [
-                'error' => true,
-                'message' => 'Usuario não existe',
-            ];
-        }
+    public function index($id_project){
+        return $this->project_repository->find($id_project)->members()->get();
     }
 
-    public function create(array $data){
-        // enviar email
-        // disparar notificacao
-        try {
-            $this->validator->with($data)->passesOrFail();
-            return $this->repository->create($data);
-        } catch(ValidatorException $e){
-            return [
-                'error' => true,
-                'message' => $e->getMessageBag(),
-            ];
-        }
-    }
-
-    public function update(array $data, $id){
-        try {
-            $this->validator->with($data)->passesOrFail();
-            return $this->repository->update($data, $id);
-        } catch(ValidatorException $e){
-            return [
-                'error' => true,
-                'message' => $e->getMessageBag(),
-            ];
-        } catch(ModelNotFoundException $e){
-            return [
-                'error' => true,
-                'message' => 'Não foi possível atualizar',
-            ];
-        }
-    }
-
-    public function destroy($id){
-        try {
-            $this->repository->delete($id);
-            #acento aqui funcionou normal
-            return "Nota id:{$id} deletado com sucesso";
-        } catch(ModelNotFoundException $e){
-            return [
-                'error' => true,
-                'message' => 'O usuário que está tentando desvincular não existe',
-            ];
-        }
-    }*/
 }

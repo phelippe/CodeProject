@@ -27,6 +27,16 @@ Route::get('project/{id}', 'ProjectController@show');
 Route::put('project/{id}', 'ProjectController@update');
 Route::delete('project/{id}', 'ProjectController@destroy');
 
+Route::get('project/{id}/members', 'ProjectMemberController@index');
+/*Route::get('project/{id}/members', function(){
+    $ret = '#';
+
+    $ret = \CodeProject\Entities\;
+
+    #dd($ret);
+    return $ret;
+});*/
+
 Route::get('project/note', 'ProjectNoteController@index');
 Route::post('project/note', 'ProjectNoteController@store');
 Route::get('project/note/{id}', 'ProjectNoteController@show');
@@ -39,4 +49,3 @@ Route::get('project/tasks/{id}', 'ProjectTaskController@show');
 Route::put('project/tasks/{id}', 'ProjectTaskController@update');
 Route::delete('project/tasks/{id}', 'ProjectTaskController@destroy');
 
-Route::get('project/{id}/members', 'ProjectMemberController@index'); #?
