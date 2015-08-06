@@ -15,6 +15,12 @@ class ProjectMember extends Model implements Transformable
 		'user_id',
 	];
 
+	protected $visible = [
+		'id',
+		'project_id',
+		'user_id',
+	];
+
 	public function project(){
 		return $this->belongsTo(Project::class);
 	}

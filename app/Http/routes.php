@@ -37,6 +37,10 @@ Route::get('project/{id}/members', 'ProjectMemberController@index');
     return $ret;
 });*/
 Route::post('project/{id}/members', 'ProjectMemberController@store');
+Route::get('project/{id}/members/{id_member}', 'ProjectMemberController@show');
+Route::delete('project/{id}/members/{id_member}', 'ProjectMemberController@destroy');
+
+Route::get('project/{id}/is_member/{id_user}', 'ProjectMemberController@isMember');
 
 Route::get('project/note', 'ProjectNoteController@index');
 Route::post('project/note', 'ProjectNoteController@store');

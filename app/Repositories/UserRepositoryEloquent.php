@@ -8,9 +8,9 @@ use CodeProject\Entities\User;
 
 /**
  * Class UserRepositoryEloquent
- * @package namespace CodeProject\Repositories;
+ * @package namespace CodeUser\Repositories;
  */
-class ProjectRepositoryEloquent extends BaseRepository implements ProjectRepository
+class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
     /**
      * Specify Model class name

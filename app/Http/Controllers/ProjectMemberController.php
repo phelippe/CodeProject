@@ -40,6 +40,18 @@ class ProjectMemberController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($project_id, $member_id)
+    {
+        #dd($member_id);
+        return $this->service->show($project_id, $member_id);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
@@ -48,6 +60,20 @@ class ProjectMemberController extends Controller
     public function store($project_id, Request $request)
     {
         return $this->service->create($project_id, $request->all());
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function destroy($id_project, $id_member)
+    {
+        return $this->service->destroy($id_member);
+    }
+
+    public function isMember($id_project, $id_user)
+    {
+        return $this->service->isMember($id_project, $id_user);
     }
 
 }
