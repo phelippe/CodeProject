@@ -45,9 +45,9 @@ class ProjectTaskController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $project_id)
     {
-        return $this->service->create($request->all());
+        return $this->service->create($request->all(),$project_id);
     }
 
     /**
@@ -56,9 +56,9 @@ class ProjectTaskController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($project_id, $task_id)
     {
-        return $this->service->show($id);
+        return $this->service->show($project_id, $task_id);
     }
 
     /**
@@ -68,9 +68,9 @@ class ProjectTaskController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $project_id, $task_id)
     {
-        return $this->service->update($request->all(), $id);
+        return $this->service->update($request->all(), $project_id, $task_id);
     }
 
     /**
@@ -79,8 +79,8 @@ class ProjectTaskController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($project_id, $task_id)
     {
-        return $this->service->destroy($id);
+        return $this->service->destroy($project_id, $task_id);
     }
 }

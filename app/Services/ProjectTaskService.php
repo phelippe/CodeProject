@@ -36,10 +36,9 @@ class ProjectTaskService
         $this->validator = $validator;
     }
 
-    public function show($id){
+    public function show($project_id, $task_id){
         try {
-            #hidden não funciona
-            return $this->repository->hidden(['project_id'])->find($id);
+            return $this->repository->findWhere(['project_id'=>$project_id, 'id'=>$task_id]);
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
@@ -48,10 +47,11 @@ class ProjectTaskService
         }
     }
 
-    public function create(array $data){
+    public function create(array $data, $project_id){
         // enviar email
         // disparar notificacao
         try {
+            $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);
         } catch(ValidatorException $e){
@@ -62,10 +62,11 @@ class ProjectTaskService
         }
     }
 
-    public function update(array $data, $id){
+    public function update(array $data, $project_id, $task_id){
         try {
+            $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
-            return $this->repository->update($data, $id);
+            return $this->repository->update($data, $task_id);
         } catch(ValidatorException $e){
             return [
                 'error' => true,
@@ -79,11 +80,11 @@ class ProjectTaskService
         }
     }
 
-    public function destroy($id){
+    public function destroy($project_id, $task_id){
         try {
-            $this->repository->delete($id);
+            $this->repository->delete($task_id);
             #acento aqui funcionou normal
-            return "Nota id:{$id} deletado com sucesso";
+            return "Nota id:{$task_id} deletado com sucesso";
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,

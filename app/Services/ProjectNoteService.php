@@ -36,9 +36,9 @@ class ProjectNoteService
         $this->validator = $validator;
     }
 
-    public function show($id){
+    public function show($project_id, $note_id){
         try {
-            return $this->repository->hidden(['project_id'])->with(['project'])->find($id);
+            return $this->repository->findWhere(['project_id'=>$project_id, 'id'=>$note_id]);
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
@@ -61,10 +61,11 @@ class ProjectNoteService
         }
     }
 
-    public function update(array $data, $id){
+    public function update(array $data, $project_id, $note_id){
         try {
+            $data['project_id'] = $project_id;
             $this->validator->with($data)->passesOrFail();
-            return $this->repository->update($data, $id);
+            return $this->repository->update($data, $note_id);
         } catch(ValidatorException $e){
             return [
                 'error' => true,
@@ -78,11 +79,11 @@ class ProjectNoteService
         }
     }
 
-    public function destroy($id){
+    public function destroy($note_id){
         try {
-            $this->repository->delete($id);
+            $this->repository->delete($note_id);
             #acento aqui funcionou normal
-            return "Nota id:{$id} deletado com sucesso";
+            return "Nota id:{$note_id} deletado com sucesso";
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
