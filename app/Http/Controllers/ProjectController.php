@@ -4,12 +4,10 @@ namespace CodeProject\Http\Controllers;
 
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use CodeProject\Http\Requests;
-use CodeProject\Http\Controllers\Controller;
-use Prettus\Validator\Exceptions\ValidatorException;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class ProjectController extends Controller
 {
@@ -30,6 +28,9 @@ class ProjectController extends Controller
 
         $this->service = $service;
         $this->repository = $repository;
+
+        $this->middleware('CheckProjectOwner', ['only' => ['update', 'destroy']]);
+        $this->middleware('CheckProjectPermissions', ['only' => ['show']]);
     }
 
     /**
@@ -39,8 +40,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        #hidden n�o est� funcionando
-        return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client'])->all();
+        #return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client'])->all();
+        /*return $this->repository->
+            with(['client', 'tasks', 'notes', 'members'])->
+            all()->members()->where(['user_id' => Authorizer::getResourceOwnerId()]);*/
+        return $this->service->index();
     }
 
     /**

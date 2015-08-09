@@ -11,8 +11,10 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectMemberRepository;
 use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Repositories\UserRepository;
 use CodeProject\Validators\ProjectValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use Mockery\CountValidator\Exception;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -32,23 +34,34 @@ class ProjectService
      * @var ProjectMemberRepository
      */
     private $project_member_repository;
+    /**
+     * @var UserRepository
+     */
+    private $user_repository;
 
     /**
      * @param ProjectRepository $repository
      * @param ProjectValidator $validator
      * @param ProjectMemberRepository $project_member_repository
+     * @param UserRepository $user_repository
      * @internal param ProjectService $service
      */
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator, ProjectMemberRepository $project_member_repository){
+    public function __construct(ProjectRepository $repository, ProjectValidator $validator, ProjectMemberRepository $project_member_repository, UserRepository $user_repository){
         $this->repository = $repository;
         $this->validator = $validator;
         $this->project_member_repository = $project_member_repository;
+        $this->user_repository = $user_repository;
+    }
+
+    public function index()
+    {
+        return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
     }
 
     public function show($id){
         try {
             //hidden nao funciona
-            return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client', 'notes'])->find($id);
+            return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client', 'notes', 'members'])->find($id);
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
@@ -74,7 +87,13 @@ class ProjectService
         // postar tweet
         try {
             $this->validator->with($data)->passesOrFail();
-            return $this->repository->create($data);
+
+            $project = $this->repository->create($data);
+
+            //Adiciona o owner como membro
+            $this->project_member_repository->create(['project_id'=>$project->id, 'user_id' => $project->owner_id]);
+
+            return $project;
         } catch(ValidatorException $e){
             return [
                 'error' => true,

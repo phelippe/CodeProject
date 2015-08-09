@@ -15,42 +15,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('client', 'ClientController@index');
-Route::post('client', 'ClientController@store');
-Route::get('client/{id}', 'ClientController@show');
-Route::put('client/{id}', 'ClientController@update');
-Route::delete('client/{id}', 'ClientController@destroy');
+Route::post('oauth/access_token', function(){
+    return Response::json(Authorizer::issueAccessToken());
+});
 
-Route::get('project', 'ProjectController@index');
-Route::post('project', 'ProjectController@store');
-Route::get('project/{id}', 'ProjectController@show');
-Route::put('project/{id}', 'ProjectController@update');
-Route::delete('project/{id}', 'ProjectController@destroy');
+Route::get('teste', function(){
+    #return \CodeProject\Entities\Project::find(10)->members()->where(['user_id'=>11])->first();
+    /*return \CodeProject\Entities\Project::with(['members' => function($query){
+        $query->where(['user_id'=>4]);
+    }])->orWhere(['owner_id' => 1])->get();*/
+    /*return \CodeProject\Entities\Project::with(['members'=>function($query){
+        $query->where(['user_id'=>1]);
+    }])->get();*/
+    #return \CodeProject\Entities\User::find(1)->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
+});
 
-Route::get('project/{id}/members', 'ProjectMemberController@index');
-/*Route::get('project/{id}/members', function(){
-    $ret = '#';
+Route::group(['middleware'=>'oauth'], function(){
 
-    $ret = \CodeProject\Entities\;
+    Route::resource('client', 'ClientController', ['except'=>['create', 'edit']] );
 
-    #dd($ret);
-    return $ret;
-});*/
-Route::post('project/{id}/members', 'ProjectMemberController@store');
-Route::get('project/{id}/members/{id_member}', 'ProjectMemberController@show');
-Route::delete('project/{id}/members/{id_member}', 'ProjectMemberController@destroy');
+    Route::resource('project', 'ProjectController', ['except'=>['create', 'edit']] );
 
-Route::get('project/{id}/is_member/{id_user}', 'ProjectMemberController@isMember');
+    Route::resource('project.notes', 'ProjectNoteController', ['except'=>['create', 'edit']] );
 
-Route::get('project/{id}/notes', 'ProjectNoteController@index');
-Route::post('project/{id}/notes', 'ProjectNoteController@store');
-Route::get('project/{id}/notes/{id_note}', 'ProjectNoteController@show');
-Route::put('project/{id}/notes/{id_note}', 'ProjectNoteController@update');
-Route::delete('project/{id}/notes/{id_note}', 'ProjectNoteController@destroy');
+    Route::resource('project.tasks', 'ProjectTaskController', ['except'=>['create', 'edit']] );
 
-Route::get('project/{id}/tasks', 'ProjectTaskController@index');
-Route::post('project/{id}/tasks', 'ProjectTaskController@store');
-Route::get('project/{id}/tasks/{id_task}', 'ProjectTaskController@show');
-Route::put('project/{id}/tasks/{id_task}', 'ProjectTaskController@update');
-Route::delete('project/{id}/tasks/{id_task}', 'ProjectTaskController@destroy');
+    Route::resource('project.members', 'ProjectMemberController', ['except'=>['create', 'edit']] );
+    Route::get('project/{id}/is_member/{id_user}', 'ProjectMemberController@isMember');
 
+});
