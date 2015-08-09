@@ -2,6 +2,7 @@
 
 namespace CodeProject\Repositories;
 
+use CodeProject\Presenters\ProjectPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeProject\Entities\Project;
@@ -30,7 +31,7 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
         $this->pushCriteria( app(RequestCriteria::class) );
     }
 
-    public function isOwner($id, $user_id)
+    /*public function isOwner($id, $user_id)
     {
         if( count($this->findWhere(['id'=>$id, 'owner_id'=>$user_id])) ){
             return true;
@@ -40,9 +41,14 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
 
     public function isMember($id, $user_id)
     {
+        #dd($this->find($id));
         if( count($this->find($id)->members()->where(['user_id'=>$user_id])->first()) ){
             return true;
         }
         return false;
+    }*/
+
+    public function presenter(){
+        return ProjectPresenter::class;
     }
 }

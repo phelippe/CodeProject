@@ -27,7 +27,8 @@ Route::get('teste', function(){
     /*return \CodeProject\Entities\Project::with(['members'=>function($query){
         $query->where(['user_id'=>1]);
     }])->get();*/
-    #return \CodeProject\Entities\User::find(1)->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
+    #return \CodeProject\Entities\User::find(1)->projects()->with(['client', 'tasks', 'notes', 'members'])->where(['project_id'=>8])->get();
+    #return \CodeProject\Entities\Project::find(3)->members()->where(['user_id'=>1])->first();
 });
 
 Route::group(['middleware'=>'oauth'], function(){

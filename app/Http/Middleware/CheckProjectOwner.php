@@ -30,7 +30,11 @@ class CheckProjectOwner
     {
         $user_id = \Authorizer::getResourceOwnerId();
         $project_id = $request->project;
-        if($this->repository->isOwner($project_id, $user_id) == false){
+
+        /*if($this->repository->isOwner($project_id, $user_id) == false){
+            return ['error'=>'Access forbidden'];
+        }*/
+        if( count($this->repository->findWhere(['id'=>$project_id, 'owner_id'=>$user_id])) == false){
             return ['error'=>'Access forbidden'];
         }
         return $next($request);

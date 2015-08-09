@@ -55,7 +55,8 @@ class ProjectService
 
     public function index()
     {
-        return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
+        #return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
+        return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->get();
     }
 
     public function show($id){

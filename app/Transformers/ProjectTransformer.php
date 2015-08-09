@@ -3,13 +3,35 @@
  * Created by PhpStorm.
  * User: Phelippe Matte
  * Date: 08/08/2015
- * Time: 22:05
+ * Time: 23:24
  */
 
-namespace CodeProject\Transformer;
+namespace CodeProject\Transformers;
 
 
-class ProjectTransformer
+use CodeProject\Entities\Project;
+use League\Fractal\TransformerAbstract;
+
+class ProjectTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = ['members'];
 
+    public function transform(Project $project){
+        return [
+            #'id' => $project->id,
+            'project_id' => $project->id,
+            'project' => $project->name,
+            'client' => $project->client_id,
+            'owner' => $project->owner_id,
+            'description' => $project->description,
+            'progress' => $project->progress,
+            'status' => $project->status,
+            #'members' => $project->members,
+        ];
+    }
+
+    public function includeMembers(Project $project)
+    {
+        return $this->collection($project->members, new ProjectMemberTransformer());
+    }
 }
