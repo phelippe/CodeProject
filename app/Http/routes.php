@@ -31,7 +31,7 @@ Route::get('teste', function(){
     #return \CodeProject\Entities\Project::find(3)->members()->where(['user_id'=>1])->first();
 });
 
-Route::group(['middleware'=>'oauth'], function(){
+#Route::group(['middleware'=>'oauth'], function(){
 
     Route::resource('client', 'ClientController', ['except'=>['create', 'edit']] );
 
@@ -44,4 +44,6 @@ Route::group(['middleware'=>'oauth'], function(){
     Route::resource('project.members', 'ProjectMemberController', ['except'=>['create', 'edit']] );
     Route::get('project/{id}/is_member/{id_user}', 'ProjectMemberController@isMember');
 
-});
+    #route::post('project/{id}/file', 'ProjectFileController@store');
+    Route::resource('project.file', 'ProjectFileController@store', ['only'=>['store']]);
+#});
