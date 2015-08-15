@@ -13,9 +13,7 @@ use CodeProject\Repositories\ProjectMemberRepository;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Repositories\UserRepository;
 use CodeProject\Validators\ProjectValidator;
-use Illuminate\Contracts\Filesystem\Factory as Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Filesystem\Filesystem;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use Mockery\CountValidator\Exception;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -40,36 +38,22 @@ class ProjectService
      * @var UserRepository
      */
     private $user_repository;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var Storage
-     */
-    private $storage;
 
     /**
      * @param ProjectRepository $repository
      * @param ProjectValidator $validator
      * @param ProjectMemberRepository $project_member_repository
      * @param UserRepository $user_repository
-     * @param Filesystem $filesystem
-     * @param Storage $storage
      * @internal param ProjectService $service
      */
     public function __construct(ProjectRepository $repository,
                                 ProjectValidator $validator,
                                 ProjectMemberRepository $project_member_repository,
-                                UserRepository $user_repository,
-                                Filesystem $filesystem,
-                                Storage $storage){
+                                UserRepository $user_repository){
         $this->repository = $repository;
         $this->validator = $validator;
         $this->project_member_repository = $project_member_repository;
         $this->user_repository = $user_repository;
-        $this->filesystem = $filesystem;
-        $this->storage = $storage;
     }
 
     public function index()
@@ -177,16 +161,4 @@ class ProjectService
     public function isMember($id_user, $id_project){
         return 'isMember';
     }
-
-    public function createFile(array $data){
-        #dd($data);
-        $project = $this->repository->skipPresenter()->find($data['project_id']);
-        #dd($project);
-        $projectFile = $project->files()->create($data);
-
-        $this->storage->put( $projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']) );
-
-    }
-
-
 }

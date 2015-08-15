@@ -45,5 +45,5 @@ Route::get('teste', function(){
     Route::get('project/{id}/is_member/{id_user}', 'ProjectMemberController@isMember');
 
     #route::post('project/{id}/file', 'ProjectFileController@store');
-    Route::resource('project.file', 'ProjectFileController@store', ['only'=>['store']]);
+    Route::resource('project.file', 'ProjectFileController', ['only'=>['store', 'show', 'destroy']]);
 #});

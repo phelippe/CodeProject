@@ -2,7 +2,7 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Services\ProjectService;
+use CodeProject\Services\ProjectFileService;
 use Illuminate\Http\Request;
 
 use CodeProject\Http\Requests;
@@ -11,7 +11,7 @@ class ProjectFileController extends Controller
 {
     protected $service;
 
-    public function __construct(ProjectService $service){
+    public function __construct(ProjectFileService $service){
         $this->service = $service;
     }
 
@@ -33,7 +33,6 @@ class ProjectFileController extends Controller
      */
     public function store(Request $request)
     {
-        #dd($request->project);
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
 
@@ -43,7 +42,7 @@ class ProjectFileController extends Controller
         $data['description'] = $request->name;
         $data['project_id'] = $request->project;
 
-        $this->service->createFile($data);
+        $this->service->create($data);
     }
 
     /**
@@ -52,21 +51,10 @@ class ProjectFileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($project_id, $file_id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        #dd($project_id, $file_id);
+        return $this->service->show($file_id);
     }
 
     /**
@@ -75,8 +63,8 @@ class ProjectFileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($project_id, $file_id)
     {
-        //
+        return $this->service->destroy($project_id, $file_id);
     }
 }
