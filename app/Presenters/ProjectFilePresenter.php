@@ -3,6 +3,7 @@
 namespace CodeProject\Presenters;
 
 use CodeProject\Transformers\ProjectFilePresenterTransformer;
+use CodeProject\Transformers\ProjectFileTransformer;
 use Prettus\Repository\Presenter\FractalPresenter;
 
 /**

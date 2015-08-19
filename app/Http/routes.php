@@ -31,7 +31,7 @@ Route::get('teste', function(){
     #return \CodeProject\Entities\Project::find(3)->members()->where(['user_id'=>1])->first();
 });
 
-#Route::group(['middleware'=>'oauth'], function(){
+Route::group(['middleware'=>'oauth'], function(){
 
     Route::resource('client', 'ClientController', ['except'=>['create', 'edit']] );
 
@@ -46,4 +46,4 @@ Route::get('teste', function(){
 
     #route::post('project/{id}/file', 'ProjectFileController@store');
     Route::resource('project.file', 'ProjectFileController', ['only'=>['store', 'show', 'destroy']]);
-#});
+});

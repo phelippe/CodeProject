@@ -54,8 +54,12 @@ class ProjectFileService
 
     public function create(array $data){
         try {
+            #dd($this->filesystem->get($data['file']));
             $file = $this->repository->create($data);
-            $this->storage->put( $file->id.'.'.$data['extension'], $this->filesystem->get($data['file']) );
+            #dd($file['data']['id']);
+            #$file = new \stdClass();
+            #$file->id = 1;
+            $this->storage->put( $file['data']['id'].'.'.$data['extension'], $this->filesystem->get($data['file']) );
         } catch(ValidatorException $e){
             return [
                 'error' => true,

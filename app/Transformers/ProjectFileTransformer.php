@@ -2,6 +2,7 @@
 
 namespace CodeProject\Transformers;
 
+use CodeProject\Entities\ProjectFile;
 use League\Fractal\TransformerAbstract;
 use CodeProject\Entities\ProjectFilePresenter;
 
@@ -9,7 +10,7 @@ use CodeProject\Entities\ProjectFilePresenter;
  * Class ProjectFilePresenterTransformer
  * @package namespace CodeProject\Transformers;
  */
-class ProjectFilePresenterTransformer extends TransformerAbstract
+class ProjectFileTransformer extends TransformerAbstract
 {
 
     /**
@@ -18,7 +19,7 @@ class ProjectFilePresenterTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public function transform(ProjectFilePresenter $model) {
+    public function transform(ProjectFile $model) {
         return [
             'id'         => (int)$model->id,
             'description' => $model->description,
