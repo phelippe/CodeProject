@@ -47,9 +47,10 @@ class ProjectNoteService
         }
     }
 
-    public function create(array $data){
+    public function create($project_id, array $data){
         // enviar email
         // disparar notificacao
+        $data['project_id'] = $project_id;
         try {
             $this->validator->with($data)->passesOrFail();
             return $this->repository->create($data);

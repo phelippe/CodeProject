@@ -2,6 +2,7 @@
 
 namespace CodeProject\Transformers;
 
+use CodeProject\Entities\ProjectTask;
 use League\Fractal\TransformerAbstract;
 use CodeProject\Entities\ProjectTaskPresenter;
 
@@ -18,7 +19,7 @@ class ProjectTaskTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public function transform(ProjectTaskPresenter $model) {
+    public function transform(ProjectTask $model) {
         return [
             'id'         => (int)$model->id,
             'name' => $model->name,

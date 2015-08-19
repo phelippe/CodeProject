@@ -45,9 +45,9 @@ class ProjectNoteController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store($project_id, Request $request)
     {
-        return $this->service->create($request->all());
+        return $this->service->create($project_id, $request->all());
     }
 
     /**

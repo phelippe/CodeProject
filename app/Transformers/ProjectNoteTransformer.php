@@ -2,6 +2,7 @@
 
 namespace CodeProject\Transformers;
 
+use CodeProject\Entities\ProjectNote;
 use League\Fractal\TransformerAbstract;
 use CodeProject\Entities\ProjectNotePresenter;
 
@@ -18,14 +19,13 @@ class ProjectNoteTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public function transform(ProjectNotePresenter $model) {
+    public function transform(ProjectNote $model) {
         return [
             'id'         => (int)$model->id,
             'title' =>  $model->title,
             'note'  =>  $model->note,
 
             /* place your other model properties here */
-
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at
         ];

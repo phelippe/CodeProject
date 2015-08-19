@@ -2,7 +2,7 @@
 
 namespace CodeProject\Presenters;
 
-use CodeProject\Transformers\ProjectMemberPresenterTransformer;
+use CodeProject\Transformers\ProjectMemberTransformer;
 use Prettus\Repository\Presenter\FractalPresenter;
 
 /**
