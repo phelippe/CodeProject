@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Notas do projeto</div>
+                <div class="panel-heading">{{ page_title }}</div>
                 <div class="panel-body">
                     <table class="table">
                         <thead>
@@ -14,11 +14,11 @@
                         <tbody>
                             <tr ng-repeat="o in notes">
                                 <td>{{ o.title }}</td>
-                                <td>{{ o.note }}</td>
+                                <td>{{ o.note | limitTo: 50 }}...</td>
                                 <td>
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}" class="btn btn-info">Ver</a>
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/edit" class="btn btn-warning">Editar</a>
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/delete" class="btn btn-danger">Deletar</a>
+                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}" >Ver</a> |
+                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/edit" >Editar</a> |
+                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/delete" >Deletar</a>
                                 </td>
                             </tr>
                         </tbody>
