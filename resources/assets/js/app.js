@@ -87,7 +87,7 @@ app.config([
                 templateUrl: 'build/views/project_notes/edit.html',
                 controller: 'ProjectNoteEditController',
             })
-            .when('/project/:id/notes/:idNote/delete', {
+            .when('/project/:id_project/notes/:id_note/delete', {
                 templateUrl: 'build/views/project_notes/delete.html',
                 controller: 'ProjectNoteDeleteController',
             })

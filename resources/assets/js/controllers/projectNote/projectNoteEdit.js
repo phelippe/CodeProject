@@ -6,17 +6,16 @@ angular.module('app.controllers')
             id_note: $routeParams.id_note
         });
         $scope.page_title = 'Editar nota';
+        $scope.btn_text = 'Editar';
 
         $scope.update = function () {
             if($scope.form.$valid){
-                ProjectNote.update({id: $scope.project_note.id_note}, $scope.project_note, function(){
-                    $location.path('/clientes');
-                });
-            }
-            /*if ($scope.form.$valid) {
-                $scope.project_note.$save({id_project: $routeParams.id_project}).then(function () {
+                ProjectNote.update({
+                    id_project: $routeParams.id_project,
+                    id_note: $routeParams.id_note,
+                }, $scope.project_note, function(){
                     $location.path('/project/'+ $routeParams.id_project +'/notes');
                 });
-            }*/
+            }
         }
     }]);

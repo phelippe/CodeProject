@@ -23,7 +23,8 @@ class ProjectNoteController extends Controller
      * @param ProjectNoteService $service
      * @param ProjectNoteRepository $repository
      */
-    public function __construct(ProjectNoteService $service, ProjectNoteRepository $repository){
+    public function __construct(ProjectNoteService $service, ProjectNoteRepository $repository)
+    {
 
         $this->service = $service;
         $this->repository = $repository;
@@ -36,13 +37,13 @@ class ProjectNoteController extends Controller
      */
     public function index($id_project)
     {
-        return $this->repository->skipPresenter()->findWhere(['project_id'=>$id_project]);
+        return $this->repository->skipPresenter()->findWhere(['project_id' => $id_project]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  Request $request
      * @return Response
      */
     public function store($project_id, Request $request)
@@ -53,7 +54,7 @@ class ProjectNoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function show($project_id, $note_id)
@@ -64,8 +65,8 @@ class ProjectNoteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param  Request $request
+     * @param  int $id
      * @return Response
      */
     public function update(Request $request, $project_id, $note_id)
@@ -76,7 +77,7 @@ class ProjectNoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function destroy($project_id, $note_id)
