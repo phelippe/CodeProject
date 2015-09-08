@@ -36,7 +36,7 @@ class ProjectNoteController extends Controller
      */
     public function index($id_project)
     {
-        return $this->repository->findWhere(['project_id'=>$id_project]);
+        return $this->repository->skipPresenter()->findWhere(['project_id'=>$id_project]);
     }
 
     /**

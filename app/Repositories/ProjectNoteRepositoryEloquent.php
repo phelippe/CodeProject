@@ -31,7 +31,7 @@ class ProjectNoteRepositoryEloquent extends BaseRepository implements ProjectNot
         $this->pushCriteria( app(RequestCriteria::class) );
     }
 
-    public function presenter(){
+    /*public function presenter(){
         return ProjectNotePresenter::class;
-    }
+    }*/
 }

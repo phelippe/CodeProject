@@ -38,7 +38,7 @@ class ProjectNoteService
 
     public function show($project_id, $note_id){
         try {
-            return $this->repository->findWhere(['project_id'=>$project_id, 'id'=>$note_id]);
+            return $this->repository->skipPresenter()->findWhere(['project_id'=>$project_id, 'id'=>$note_id]);
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,

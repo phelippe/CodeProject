@@ -43,7 +43,40 @@ app.config([
             .when('/clientes/:id/delete', {
                 templateUrl: 'build/views/client/delete.html',
                 controller: 'ClientDeleteController',
-            });
+            })
+
+            //Project
+            .when('/projetos', {
+                templateUrl: 'build/views/project/list.html',
+                controller: 'ProjectListController',
+            })
+            .when('/projetos/:id', {
+                templateUrl: 'build/views/project/show.html',
+                controller: 'ProjectShowController',
+            })
+
+            //Project Notes
+            .when('/project/:id_project/notes', {
+                templateUrl: 'build/views/project_notes/list.html',
+                controller: 'ProjectNoteListController',
+            })
+            .when('/project/:id_project/notes/new', {
+                templateUrl: 'build/views/project_notes/new.html',
+                controller: 'ProjectNoteNewController',
+            })
+            .when('/project/:id_project/notes/:id_note', {
+                templateUrl: 'build/views/project_notes/show.html',
+                controller: 'ProjectNoteShowController',
+            })
+            .when('/project/:id/notes/:idNote/edit', {
+                templateUrl: 'build/views/project_notes/edit.html',
+                controller: 'ProjectNoteEditController',
+            })
+            .when('/project/:id/notes/:idNote/delete', {
+                templateUrl: 'build/views/project_notes/delete.html',
+                controller: 'ProjectNoteDeleteController',
+            })
+        ;
 
         OAuthProvider.configure({
             baseUrl: appConfigProvider.config.baseUrl,
