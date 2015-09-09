@@ -28,18 +28,24 @@ angular.module('app.controllers')
         }
     }])
     .controller('ProjectNewController',
-    ['$scope', '$location', 'Project', '$http', 'appConfig', '$routeParams',
-        function ($scope, $location, Project, $http, appConfig, $routeParams) {
+    ['$scope', '$location', 'Project', '$http', 'appConfig', '$routeParams', 'Client', 'User', '$cookies',
+        function ($scope, $location, Project, $http, appConfig, $routeParams, Client, User, $cookies) {
 
-            $scope.project_project = new Project();
-            $scope.page_title = 'Cadastrar projeto';
+            $scope.project = new Project();
+            $scope.clients = Client.query();
+            $scope.status = appConfig.project.status;
+            //$scope.users = User.query();
+            //console.log($cookies.getObject('user').id);
+
+            $scope.page_title = 'Novo projeto';
             $scope.btn_text = 'Cadastrar';
 
 
             $scope.save = function () {
                 if ($scope.form.$valid) {
-                    $scope.project_project.$save({id_project: $routeParams.id_project}).then(function () {
-                        $location.path('/project/' + $routeParams.id_project + '/projects');
+                    $scope.project.owner_id = $cookies.getObject('user').id;
+                    $scope.project.$save({}).then(function () {
+                        $location.path('/projetos');
                     });
                 }
             }

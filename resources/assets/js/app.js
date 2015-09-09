@@ -9,6 +9,13 @@ angular.module('app.services', ['ngResource']);
 app.provider('appConfig', function () {
     var config = {
         baseUrl: 'http://localhost:8000',
+        project: {
+            status: [
+                {value: 1, label: 'Não iniciado'},
+                {value: 2, label: 'Iniciado'},
+                {value: 3, label: 'Concluido'},
+            ]
+        },
     }
 
     return {
@@ -74,7 +81,7 @@ app.config([
                 templateUrl: 'build/views/project/list.html',
                 controller: 'ProjectListController',
             })
-            .when('/projetos/new', {
+            .when('/projetos/novo', {
                 templateUrl: 'build/views/project/new.html',
                 controller: 'ProjectNewController',
             })

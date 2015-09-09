@@ -20,7 +20,7 @@
                                 <td>{{ o.client.name }}</td>
                                 <td>{{ o.status }}</td>
                                 <td>{{ o.progress }}</td>
-                                <td>{{ o.due_date | formatDatetime | date: 'dd/MM/yyyy HH:mm' }}</td>
+                                <td>{{ o.due_date | dateBr }}</td>
                                 <td>
                                     <a ng-href="#/projetos/{{ o.id }}" >Ver</a> |
                                     <a ng-href="#/projetos/{{ o.id }}/editar" >Editar</a> |

@@ -33,6 +33,9 @@ Route::get('teste', function(){
 
 Route::group(['middleware'=>'oauth'], function(){
 
+    #@TODO: listagem de usuarios para recuperar na listagem de owners no cad. de projeto
+    #Route::resource('users', 'UserController', ['except'=>['create', 'edit']] );
+
     Route::resource('client', 'ClientController', ['except'=>['create', 'edit']] );
 
     Route::resource('project', 'ProjectController', ['except'=>['create', 'edit']] );

@@ -98,8 +98,11 @@ class ProjectService
 
             $project = $this->repository->create($data);
 
+            $project_rtrn = $this->repository($project['id']);
+            dd($project_rtrn);
             //Adiciona o owner como membro
-            $this->project_member_repository->create(['project_id'=>$project->id, 'user_id' => $project->owner_id]);
+            #$this->project_member_repository->create(['project_id'=>$project->id, 'user_id' => $project->owner_id]);
+            $this->project_member_repository->create(['project_id'=>$project['data']['id'], 'user_id' => $project['data']['owner_id']]);
 
             return $project;
         } catch(ValidatorException $e){
