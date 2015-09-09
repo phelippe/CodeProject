@@ -4,7 +4,6 @@ namespace CodeProject\Transformers;
 
 use CodeProject\Entities\ProjectTask;
 use League\Fractal\TransformerAbstract;
-use CodeProject\Entities\ProjectTaskPresenter;
 
 /**
  * Class ProjectTaskPresenterTransformer

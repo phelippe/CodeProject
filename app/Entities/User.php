@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function owner()
     {
         #return $this->belongsTo('Codeproject\Entities\Project', 'owner_id', 'id');
-        return $this->hasMany('Codeproject\Entities\Project');
+        return $this->hasMany(Project::class, 'owner_id', 'id');
     }
 
     public function client()

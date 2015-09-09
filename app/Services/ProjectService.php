@@ -58,14 +58,18 @@ class ProjectService
 
     public function index()
     {
+        $rtrn = $this->user_repository->skipPresenter()->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members', 'owner'])->get();
         #return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
-        return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
+        #dd($rtrn);
+        return $rtrn;
     }
 
     public function show($id){
         try {
             //hidden nao funciona
-            return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client', 'notes', 'members'])->find($id);
+            $rtrn = $this->repository->skipPresenter()->hidden(['owner_id', 'client_id'])->with(['owner', 'client', 'notes', 'members', 'tasks'])->find($id);
+            #dd($rtrn);
+            return $rtrn;
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,

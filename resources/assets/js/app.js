@@ -1,6 +1,9 @@
-var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.controllers']);
+var app = angular.module('app', [
+    'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters'
+]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2', 'app.services']);
+angular.module('app.filters', []);
 angular.module('app.services', ['ngResource']);
 
 app.provider('appConfig', function () {
@@ -66,12 +69,24 @@ app.config([
                 controller: 'ClientShowController',
             })
 
-            //Project
+            //PROJETOS
             .when('/projetos', {
                 templateUrl: 'build/views/project/list.html',
                 controller: 'ProjectListController',
             })
-            .when('/projetos/:id', {
+            .when('/projetos/new', {
+                templateUrl: 'build/views/project/new.html',
+                controller: 'ProjectNewController',
+            })
+            .when('/projetos/:id_project/edit', {
+                templateUrl: 'build/views/project/edit.html',
+                controller: 'ProjectEditController',
+            })
+            .when('/projetos/:id_project/delete', {
+                templateUrl: 'build/views/project/delete.html',
+                controller: 'ProjectDeleteController',
+            })
+            .when('/projetos/:id_project', {
                 templateUrl: 'build/views/project/show.html',
                 controller: 'ProjectShowController',
             })

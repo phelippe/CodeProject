@@ -2,27 +2,29 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Listagem de clientes</div>
+                <div class="panel-heading">{{ page_title }}</div>
                 <div class="panel-body">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Responsável</th>
-                                <th>E-mail</th>
-                                <th>Telefone</th>
-                                <th>Ações</th>
+                                <th>Cliente</th>
+                                <th>Status</th>
+                                <th>Progress</th>
+                                <th>Prazo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="o in clients">
+                            <tr ng-repeat="o in projects">
                                 <td>{{ o.name }}</td>
-                                <td>{{ o.responsible }}</td>
-                                <td>{{ o.email }}</td>
-                                <td>{{ o.phone }}</td>
+                                <td>{{ o.client.name }}</td>
+                                <td>{{ o.status }}</td>
+                                <td>{{ o.progress }}</td>
+                                <td>{{ o.due_date | formatDatetime | date: 'dd/MM/yyyy HH:mm' }}</td>
                                 <td>
-                                    <a ng-href="#/clientes/{{ o.id }}/edit" class="btn btn-warning">Editar</a>
-                                    <a ng-href="#/clientes/{{ o.id }}/delete" class="btn btn-danger">Deletar</a>
+                                    <a ng-href="#/projetos/{{ o.id }}" >Ver</a> |
+                                    <a ng-href="#/projetos/{{ o.id }}/editar" >Editar</a> |
+                                    <a ng-href="#/projetos/{{ o.id }}/deletar" >Deletar</a>
                                 </td>
                             </tr>
                         </tbody>

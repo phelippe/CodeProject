@@ -33,7 +33,9 @@ class ClientService
 
     public function show($id){
         try {
-            return $this->repository->find($id);
+            $rtrn = $this->repository->find($id);
+            #dd($rtrn);
+            return  $rtrn;
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,

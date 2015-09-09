@@ -25,17 +25,17 @@ class Project extends Model implements Transformable
     protected $hidden = [
         #'owner_id',
         #'client_id',
-        'pivot',
+        #'pivot',
     ];
 
     public function owner()
     {
-        return $this->belongsTo('CodeProject\Entities\User', 'owner_id', 'id');
+        return $this->belongsTo(User::class, 'owner_id', 'id');
     }
 
     public function client()
     {
-        return $this->belongsTo('CodeProject\Entities\Client', 'client_id', 'id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
 
     public function tasks()
