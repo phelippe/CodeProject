@@ -80,18 +80,22 @@
 		{{--CONTROLLERS--}}
         <script src="{{ asset('build/js/controllers/home.js') }}"></script>
         <script src="{{ asset('build/js/controllers/login.js') }}"></script>
-        <script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
+
+        <script src="{{ asset('build/js/controllers/clientController.js') }}"></script>
+        {{--<script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
         <script src="{{ asset('build/js/controllers/client/clientNew.js') }}"></script>
         <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
-        <script src="{{ asset('build/js/controllers/client/clientDelete.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/client/clientDelete.js') }}"></script>--}}
 
-        <script src="{{ asset('build/js/controllers/projectNote/projectNoteList.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/projectNoteController.js') }}"></script>
+        {{--<script src="{{ asset('build/js/controllers/projectNote/projectNoteList.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectNote/projectNoteShow.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectNote/projectNoteNew.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectNote/projectNoteEdit.js') }}"></script>
-        <script src="{{ asset('build/js/controllers/projectNote/projectNoteDelete.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/projectNote/projectNoteDelete.js') }}"></script>--}}
 
 		{{--SERVICES--}}
+		<script src="{{ asset('build/js/services/user.js') }}"></script>
 		<script src="{{ asset('build/js/services/client.js') }}"></script>
 		<script src="{{ asset('build/js/services/projectNote.js') }}"></script>
 

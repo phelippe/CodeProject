@@ -43,6 +43,8 @@ app.config([
                 templateUrl: 'build/views/home.html',
                 controller: 'HomeController',
             })
+
+            //CLIENTES
             .when('/clientes', {
                 templateUrl: 'build/views/client/list.html',
                 controller: 'ClientListController',
@@ -58,6 +60,10 @@ app.config([
             .when('/clientes/:id/delete', {
                 templateUrl: 'build/views/client/delete.html',
                 controller: 'ClientDeleteController',
+            })
+            .when('/clientes/:id', {
+                templateUrl: 'build/views/client/show.html',
+                controller: 'ClientShowController',
             })
 
             //Project

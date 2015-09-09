@@ -1,6 +1,7 @@
 /vendor
 /node_modules
 /public/build
+public/build
 Homestead.yaml
 .env
 resources/bower_components
