@@ -53,7 +53,6 @@ angular.module('app.controllers')
             }
 
             $scope.formatName = function(id) {
-                console.log(id);
                 if(id){
                     for(var i in $scope.clients){
                         if($scope.clients[i].id == id){
@@ -62,6 +61,13 @@ angular.module('app.controllers')
                     }
                 }
                 return '';
+            }
+
+            $scope.getClients = function (name) {
+                return Client.query({
+                    search: name,
+                    searchFields: 'name:like',
+                }).$promise;
             }
 
         }])

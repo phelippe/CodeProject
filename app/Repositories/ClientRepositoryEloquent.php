@@ -13,6 +13,12 @@ use CodeProject\Entities\Client;
  */
 class ClientRepositoryEloquent extends BaseRepository implements ClientRepository
 {
+
+    protected $fieldSearchable = [
+        'name',
+        //'id',
+    ];
+
     /**
      * Specify Model class name
      *
