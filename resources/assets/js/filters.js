@@ -9,6 +9,12 @@ angular.module('app.filters')
         return function (input) {
             return $filter('date')(Date.parse(input), 'dd/MM/yyyy HH:mm');
         }
+    }])
+    .filter('status', ['$filter', 'appConfig', function ($filter, appConfig) {
+        return function (input) {
+
+            //return 'status alterado';
+        }
     }]);
 
 /*app

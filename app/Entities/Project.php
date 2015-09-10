@@ -22,14 +22,10 @@ class Project extends Model implements Transformable
         'updated_at',
     ];
 
-    protected $visible = [
-        'owner_id',
-        'client_id',
-    ];
     protected $hidden = [
         #'owner_id',
         #'client_id',
-        'pivot',
+        #'pivot',
     ];
 
     public function owner()

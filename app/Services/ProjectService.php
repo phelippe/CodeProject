@@ -59,15 +59,15 @@ class ProjectService
     public function index()
     {
         $rtrn = $this->user_repository->skipPresenter()->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members', 'owner'])->get();
+        #$rtrn = $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members', 'owner'])->get();
         #return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
-        #dd($rtrn);
         return $rtrn;
     }
 
     public function show($id){
         try {
             //hidden nao funciona
-            $rtrn = $this->repository->skipPresenter()->hidden(['owner_id', 'client_id'])->with(['owner', 'client', 'notes', 'members', 'tasks'])->find($id);
+            $rtrn = $this->repository->skipPresenter()->with(['owner', 'client', 'notes', 'members', 'tasks'])->find($id);
             #dd($rtrn);
             return $rtrn;
         } catch(ModelNotFoundException $e){
@@ -94,14 +94,12 @@ class ProjectService
         // disparar notificacao
         // postar tweet
         try {
+
             $this->validator->with($data)->passesOrFail();
 
             $project = $this->repository->create($data);
 
-            $project_rtrn = $this->repository($project['id']);
-            dd($project_rtrn);
             //Adiciona o owner como membro
-            #$this->project_member_repository->create(['project_id'=>$project->id, 'user_id' => $project->owner_id]);
             $this->project_member_repository->create(['project_id'=>$project['data']['id'], 'user_id' => $project['data']['owner_id']]);
 
             return $project;

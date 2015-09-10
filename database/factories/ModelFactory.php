@@ -38,7 +38,7 @@ $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator 
         'name' => $faker->name,
         'description' => $faker->sentence,
         'progress' => $faker->biasedNumberBetween,
-        'status' => $faker->word,
+        'status' => $faker->randomNumber(1),
         'due_date' => $faker->dateTime,
     ];
 });

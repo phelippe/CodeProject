@@ -8,11 +8,14 @@ angular.module('app.controllers')
         $scope.page_title = 'Projeto';
     }])
     .controller('ProjectEditController',
-    ['$scope', '$location', '$routeParams', 'Project', function ($scope, $location, $routeParams, Project) {
-        $scope.project_project = new Project.get({
+    ['$scope', '$location', '$routeParams', 'Project', 'Client', 'appConfig', function ($scope, $location, $routeParams, Project, Client, appConfig) {
+        $scope.project = new Project.get({
             id_project: $routeParams.id_project,
             id_project: $routeParams.id_project
         });
+        $scope.clients = Client.query();
+        $scope.status = appConfig.project.status;
+
         $scope.page_title = 'Editar projeto';
         $scope.btn_text = 'Editar';
 
@@ -20,9 +23,8 @@ angular.module('app.controllers')
             if ($scope.form.$valid) {
                 Project.update({
                     id_project: $routeParams.id_project,
-                    id_project: $routeParams.id_project,
-                }, $scope.project_project, function () {
-                    $location.path('/project/' + $routeParams.id_project + '/projects');
+                }, $scope.project, function () {
+                    $location.path('/projetos');
                 });
             }
         }
@@ -50,23 +52,33 @@ angular.module('app.controllers')
                 }
             }
 
+            $scope.formatName = function(id) {
+                console.log(id);
+                if(id){
+                    for(var i in $scope.clients){
+                        if($scope.clients[i].id == id){
+                            return $scope.clients[i].name;
+                        }
+                    }
+                }
+                return '';
+            }
+
         }])
     .controller('ProjectDeleteController',
     ['$scope', '$location', '$routeParams', 'Project', function ($scope, $location, $routeParams, Project) {
-        $scope.project_project = new Project.get({
+        $scope.project = new Project.get({
             id_project: $routeParams.id_project,
-            id_project: $routeParams.id_project
         });
 
         $scope.page_title = 'Deletar projeto';
         $scope.btn_text = 'Deletar';
 
         $scope.delete = function () {
-            $scope.project_project.$delete({
-                id_project: $scope.project_project.project_id,
-                id_project: $scope.project_project.id,
-            }).then(function () {
-                $location.path('/project/' + $routeParams.id_project + '/projects');
+            //console.log($scope.project);
+            //$scope.project.id no lugar de $scope.project.project_id, pq tem que refatorar o presenter de usuário
+            $scope.project.$delete({id_project: $scope.project.id}).then(function () {
+                $location.path('/projetos');
             });
         }
     }])

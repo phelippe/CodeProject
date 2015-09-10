@@ -9,13 +9,13 @@
                             <label class="col-md-4 control-label">Nome:</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="name" ng-model="project.name" required>
-                                <div ng-messages="form.name.$error" class="help-block" ng-show="form.title.$touched">
+                                <div ng-messages="form.name.$error" class="help-block" ng-show="form.name.$touched">
                                     <div ng-message="required">Campo obrigatório</div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group" ng-class="{'has-error': !form.project.$valid && form.project.$touched}">
+                        <div class="form-group" ng-class="{'has-error': !form.description.$valid && form.description.$touched}">
                             <label class="col-md-4 control-label">Descrição:</label>
                             <div class="col-md-6">
                                 <textarea type="text" class="form-control" name="description" ng-model="project.description" required></textarea>
@@ -28,10 +28,13 @@
                         <div class="form-group" ng-class="{'has-error': !form.client_id.$valid && form.client_id.$touched}">
                             <label class="col-md-4 control-label">Cliente:</label>
                             <div class="col-md-6">
-                                <select class="form-control" name="client_id" required
+                                <!--<select class="form-control" name="client_id" required
                                         ng-model="project.client_id" ng-options="o.id as o.name for o in clients">
                                     <option value=""><-Selecione uma opção-></option>
-                                </select>
+                                </select>-->
+                                <input class="form-control" type="text" name="client_id" ng-model="project.client_id"
+                                       typeahead="o.id as o.name for o in clients | filter:$viewValue | limitTo:8"
+                                        typeahead-input-formatter="formatName($model)" />
                                 <div ng-messages="form.client_id.$error" class="help-block" ng-show="form.client_id.$touched">
                                     <div ng-message="required">Campo obrigatório</div>
                                 </div>
@@ -62,11 +65,13 @@
                         </div>
 
                         <div class="form-group" ng-class="{'has-error': !form.progress.$valid && form.progress.$touched}">
-                            <label class="col-md-4 control-label">Progresso:</label>
+                            <label class="col-md-4 control-label">Progresso(%):</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="progress" ng-model="project.progress" required>
+                                <input type="number" class="form-control" name="progress" ng-model="project.progress" min="0" max="100" required>
                                 <div ng-messages="form.progress.$error" class="help-block" ng-show="form.progress.$touched">
                                     <div ng-message="required">Campo obrigatório</div>
+                                    <div ng-message="min">Valor mínimo permitido é 0</div>
+                                    <div ng-message="max">Valor máximo permitido é 100</div>
                                 </div>
                             </div>
                         </div>

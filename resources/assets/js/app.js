@@ -1,5 +1,5 @@
 var app = angular.module('app', [
-    'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters'
+    'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'ui.bootstrap.typeahead', 'ui.bootstrap.tpls'
 ]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2', 'app.services']);
@@ -16,6 +16,21 @@ app.provider('appConfig', function () {
                 {value: 3, label: 'Concluido'},
             ]
         },
+        utils: {
+            transformResponse: function (data, headers) {
+                var headersGetter = headers();
+                if(headersGetter['content-type'] == 'application/json' ||
+                    headersGetter['content-type'] == 'text/json' ){
+                    var dataJson = JSON.parse(data);
+                    //Verifica se possui a propriedade 'data'
+                    if(dataJson.hasOwnProperty('data')){
+                        dataJson = dataJson.data;
+                    }
+                    return dataJson;
+                }
+                return data;
+            }
+        }
     }
 
     return {
@@ -30,19 +45,10 @@ app.config([
     '$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
     function ($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
 
-        $httpProvider.defaults.transformResponse = function(data, headers){
-            var headersGetter = headers();
-            if(headersGetter['content-type'] == 'application/json' ||
-                headersGetter['content-type'] == 'text/json' ){
-                var dataJson = JSON.parse(data);
-                //Verifica se possui a propriedade 'data'
-                if(dataJson.hasOwnProperty('data')){
-                    dataJson = dataJson.data;
-                }
-                return dataJson;
-            }
-            return data;
-        }
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+        $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
+        $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
 
         $routeProvider
             .when('/login', {
@@ -85,11 +91,11 @@ app.config([
                 templateUrl: 'build/views/project/new.html',
                 controller: 'ProjectNewController',
             })
-            .when('/projetos/:id_project/edit', {
+            .when('/projetos/:id_project/editar', {
                 templateUrl: 'build/views/project/edit.html',
                 controller: 'ProjectEditController',
             })
-            .when('/projetos/:id_project/delete', {
+            .when('/projetos/:id_project/deletar', {
                 templateUrl: 'build/views/project/delete.html',
                 controller: 'ProjectDeleteController',
             })
