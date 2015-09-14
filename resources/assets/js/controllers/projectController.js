@@ -9,15 +9,18 @@ angular.module('app.controllers')
     }])
     .controller('ProjectEditController',
     ['$scope', '$location', '$routeParams', 'Project', 'Client', 'appConfig', function ($scope, $location, $routeParams, Project, Client, appConfig) {
-        $scope.project = new Project.get({
-            id_project: $routeParams.id_project,
-            id_project: $routeParams.id_project
-        });
-        $scope.clients = Client.query();
-        $scope.status = appConfig.project.status;
 
         $scope.page_title = 'Editar projeto';
         $scope.btn_text = 'Editar';
+
+        Project.get({
+            id_project: $routeParams.id_project,
+        }, function (data) {
+            $scope.project = data;
+            $scope.client_selected = data.client;
+        });
+        //$scope.clients = Client.query();
+        $scope.status = appConfig.project.status;
 
         $scope.update = function () {
             if ($scope.form.$valid) {
@@ -28,16 +31,32 @@ angular.module('app.controllers')
                 });
             }
         }
+
+        $scope.formatName = function (model) {
+            if (model) {
+                return model.name;
+            }
+            return '';
+        }
+
+        $scope.getClients = function (name) {
+            return Client.query({
+                search: name,
+                searchFields: 'name:like',
+            }).$promise;
+        }
+
+        $scope.selectClient = function(item){
+            $scope.project.client_id = item.id;
+        }
+
     }])
     .controller('ProjectNewController',
     ['$scope', '$location', 'Project', '$http', 'appConfig', '$routeParams', 'Client', 'User', '$cookies',
         function ($scope, $location, Project, $http, appConfig, $routeParams, Client, User, $cookies) {
 
             $scope.project = new Project();
-            $scope.clients = Client.query();
             $scope.status = appConfig.project.status;
-            //$scope.users = User.query();
-            //console.log($cookies.getObject('user').id);
 
             $scope.page_title = 'Novo projeto';
             $scope.btn_text = 'Cadastrar';
@@ -52,13 +71,9 @@ angular.module('app.controllers')
                 }
             }
 
-            $scope.formatName = function(id) {
-                if(id){
-                    for(var i in $scope.clients){
-                        if($scope.clients[i].id == id){
-                            return $scope.clients[i].name;
-                        }
-                    }
+            $scope.formatName = function (model) {
+                if (model) {
+                    return model.name;
                 }
                 return '';
             }
@@ -68,6 +83,10 @@ angular.module('app.controllers')
                     search: name,
                     searchFields: 'name:like',
                 }).$promise;
+            }
+
+            $scope.selectClient = function(item){
+                $scope.project.client_id = item.id;
             }
 
         }])
