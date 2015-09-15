@@ -6,7 +6,7 @@ angular.module('app.services')
                 var o = angular.copy(data);
                 o.due_date = $filter('date')(data.due_date, 'yyyy-MM-dd HH:mm:ss');
 
-                return $httpParamSerializer(o);
+                return appConfig.utils.transformRequest(o);
             }
             return data;
         };
