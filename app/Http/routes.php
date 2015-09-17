@@ -48,7 +48,7 @@ Route::group(['middleware'=>'oauth'], function(){
     Route::get('project/{id}/is_member/{id_user}', 'ProjectMemberController@isMember');
 
     #route::post('project/{id}/file', 'ProjectFileController@store');
-    Route::resource('project.file', 'ProjectFileController', ['only'=>['store', 'show', 'destroy']]);
+    Route::resource('project.file', 'ProjectFileController', ['only'=>['index', 'show', 'store', 'update', 'destroy']]);
 
     Route::get('user/authenticated', 'UserController@authenticated');
 });

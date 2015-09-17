@@ -71,14 +71,26 @@ class ProjectFileService
     #@TODO
     public function show($file_id){
         try {
-            $file = $this->repository->find($file_id);
 
-            return $this->storage->get($file_id.'.'.$file->extension);
+            $projectFile = $this->repository->skipPresenter()->find($file_id);
+            return $this->getBaseURL($projectFile);
+
+            /*$file = $this->repository->find($file_id);
+
+            return $this->storage->get($file_id.'.'.$file->extension);*/
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
                 'message' => 'Nota não existe',
             ];
+        }
+    }
+
+    private function getBaseURL($projectFile){
+        switch ($this->storage->getDefaultDriver()){
+            case 'local':
+                return $this->storage->getDriver()->getAdapter()->getPathPrefix()
+                    .'/'.$projectFile->id.'.'.$projectFile->extension;
         }
     }
 

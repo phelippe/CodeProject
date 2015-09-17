@@ -22,7 +22,7 @@ class ProjectFileController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -47,6 +47,11 @@ class ProjectFileController extends Controller
         $this->service->create($data);
     }
 
+    public function update(Request $request, $project_id, $file_id)
+    {
+        return $this->service->update($request->all(), $project_id, $file_id);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -56,7 +61,11 @@ class ProjectFileController extends Controller
     public function show($project_id, $file_id)
     {
         #dd($project_id, $file_id);
-        return $this->service->show($file_id);
+        #return $this->service->show($file_id);
+        if( $this->service->checkProjectPermissions($project_id) == false ){
+            return ['error' => 'Acesso negado'];
+        }
+        return response()->download($this->service->show($file_id));
     }
 
     /**
