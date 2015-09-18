@@ -87,12 +87,14 @@
         <script src="{{ asset('build/js/controllers/clientController.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectController.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectNoteController.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/projectFileController.js') }}"></script>
 
 		{{--SERVICES--}}
 		<script src="{{ asset('build/js/services/user.js') }}"></script>
 		<script src="{{ asset('build/js/services/client.js') }}"></script>
 		<script src="{{ asset('build/js/services/project.js') }}"></script>
 		<script src="{{ asset('build/js/services/projectNote.js') }}"></script>
+		<script src="{{ asset('build/js/services/projectFile.js') }}"></script>
 
 	@else
         <script src="{{ elixir('js/all.js') }}"></script>

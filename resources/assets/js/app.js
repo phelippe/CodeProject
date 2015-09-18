@@ -134,6 +134,28 @@ app.config([
                 templateUrl: 'build/views/project_notes/delete.html',
                 controller: 'ProjectNoteDeleteController',
             })
+
+            //Project Files
+            .when('/projetos/:id_project/files', {
+                templateUrl: 'build/views/project_file/list.html',
+                controller: 'ProjectFileListController',
+            })
+            .when('/projetos/:id_project/files/new', {
+                templateUrl: 'build/views/project_file/new.html',
+                controller: 'ProjectFileNewController',
+            })
+            .when('/projetos/:id_project/files/:id_file', {
+                templateUrl: 'build/views/project_file/show.html',
+                controller: 'ProjectFileShowController',
+            })
+            .when('/projetos/:id_project/files/:id_file/edit', {
+                templateUrl: 'build/views/project_file/edit.html',
+                controller: 'ProjectFileEditController',
+            })
+            .when('/projetos/:id_project/files/:id_file/delete', {
+                templateUrl: 'build/views/project_file/delete.html',
+                controller: 'ProjectFileDeleteController',
+            })
         ;
 
         OAuthProvider.configure({
