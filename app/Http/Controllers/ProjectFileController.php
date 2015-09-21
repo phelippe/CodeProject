@@ -32,7 +32,11 @@ class ProjectFileController extends Controller
      */
     public function index($id_project)
     {
-        return $this->repository->findWhere(['project_id' => $id_project]);
+        $rtrn = $this->repository->findWhere(['project_id' => $id_project]);
+        #$rtrn = $this->repository->all();
+        #dd($rtrn);
+
+        return $rtrn;
     }
 
     /**

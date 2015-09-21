@@ -7,18 +7,23 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Titulo</th>
-                                <th>Nota</th>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Link</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="o in notes">
-                                <td>{{ o.title }}</td>
-                                <td>{{ o.note | limitTo: 50 }}...</td>
+                            <tr ng-repeat="o in project_files">
+                                <td>{{ o.name }}</td>
+                                <td>{{ o.description | limitTo: 50 }}...</td>
                                 <td>
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}" >Ver</a> |
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/edit" >Editar</a> |
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/delete" >Deletar</a>
+                                    <a ng-href="#/project/{{ o.project_id }}/files/{{ o.file_id }}/download" target="_blank" >Download</a>
+                                </td>
+                                <td>
+                                    <a ng-href="#/project/{{ o.project_id }}/files/{{ o.file_id }}" >Ver</a> |
+                                    <a ng-href="#/project/{{ o.project_id }}/files/{{ o.file_id }}/edit" >Editar</a> |
+                                    <a ng-href="#/project/{{ o.project_id }}/files/{{ o.file_id }}/delete" >Deletar</a>
                                 </td>
                             </tr>
                         </tbody>

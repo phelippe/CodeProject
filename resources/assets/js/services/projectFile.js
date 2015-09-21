@@ -1,6 +1,7 @@
 angular.module('app.services')
-    .service('ProjectFile', ['$resource', 'appConfig', function($resource, appConfig){
-        return $resource(appConfig.baseUrl + '/project/:id_project/file/:id_file', {
+    .service('ProjectFile', ['$resource', 'appConfig', 'Url', function($resource, appConfig, Url){
+        var url = appConfig.baseUrl + Url.getUrlResource(appConfig.urls.projectFile);
+        return $resource(url, {
             id_project: '@id_project',
             id_file: '@id_file'
         }, {
@@ -9,11 +10,11 @@ angular.module('app.services')
             },
             get: {
                 isArray: true,
-            },
+            },*/
             query: {
                 method: 'GET',
-                //isArray: true,
-            },*/
+                isArray: true,
+            },
             update: {
                 method: 'PUT',
             },

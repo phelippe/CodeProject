@@ -1,11 +1,12 @@
 var app = angular.module('app', [
-    'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters',
+    'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
     'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls',
     'ngFileUpload',
 ]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2', 'app.services']);
 angular.module('app.filters', []);
+angular.module('app.directives', []);
 angular.module('app.services', ['ngResource']);
 
 app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamSerializerProvider) {
@@ -17,6 +18,9 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
                 {value: 2, label: 'Iniciado'},
                 {value: 3, label: 'Concluido'},
             ]
+        },
+        urls:{
+            projectFile: '/project/{{id_project}}/file/{{id_file}}'
         },
         utils: {
             transformRequest: function(data){
