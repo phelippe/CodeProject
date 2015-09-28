@@ -59,7 +59,8 @@ class ProjectFileService
             #dd($file['data']['id']);
             #$file = new \stdClass();
             #$file->id = 1;
-            $this->storage->put( $file['data']['id'].'.'.$data['extension'], $this->filesystem->get($data['file']) );
+            #$this->storage->put( $file['data']['id'].'.'.$data['extension'], $this->filesystem->get($data['file']) );
+            $this->storage->put( $file->getFileName(), $this->filesystem->get($data['file']) );
         } catch(ValidatorException $e){
             return [
                 'error' => true,
@@ -90,7 +91,7 @@ class ProjectFileService
         switch ($this->storage->getDefaultDriver()){
             case 'local':
                 return $this->storage->getDriver()->getAdapter()->getPathPrefix()
-                    .'/'.$projectFile->id.'.'.$projectFile->extension;
+                    .'/'.$projectFile->getFileName();
         }
     }
 
@@ -100,12 +101,18 @@ class ProjectFileService
             $file = $this->repository->find($file_id);
 
             $this->repository->delete($file->id);
-            $this->storage->delete( $file->id.'.'.$file->extension );
+            #$this->storage->delete( $file->id.'.'.$file->extension );
+            $this->storage->delete( $file->getFileName() );
         } catch(ValidatorException $e){
             return [
                 'error' => true,
                 'message' => $e->getMessageBag(),
             ];
         }
+    }
+
+    public function getFileName($id_file){
+        $file = $this->repository->skipPresenter()->find($id_file);
+        return $file->getFileName();
     }
 }

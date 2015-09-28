@@ -73,7 +73,7 @@ class ProjectFileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($project_id, $file_id)
+    /*public function show($project_id, $file_id)
     {
         #dd($project_id, $file_id);
         #return $this->service->show($file_id);
@@ -81,6 +81,23 @@ class ProjectFileController extends Controller
             return ['error' => 'Acesso negado'];
         }
         return response()->download($this->service->show($file_id));
+    }*/
+
+    public function download($project_id, $file_id)
+    {
+        /*if( $this->service->checkProjectPermissions($project_id) == false ){
+            return ['error' => 'Acesso negado'];
+        }*/
+        #return response()->download($this->service->show($file_id));
+
+        $file_path = $this->service->show($file_id);
+        $file_content = file_get_contents($file_path);
+        $file64 = base64_encode($file_content);
+        return [
+            'file' => $file64,
+            'size' => filesize($file_path),
+            'name' => $this->service->getFileName($file_id),
+        ];
     }
 
     /**
