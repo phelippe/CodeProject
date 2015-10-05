@@ -31,7 +31,7 @@
                             <label class="col-md-4 control-label">Arquivo:</label>
                             <div class="col-md-6">
                                 <div class="btn btn-info button" ngf-select ng-model="project_file.file" name="file" >Selecione um arquivo</div>
-
+                                {{project_file.file.name}}
                                 <div ng-messages="form.name.$error" class="help-block" ng-show="form.name.$touched">
                                     <div ng-message="required">Campo obrigatório</div>
                                 </div>
