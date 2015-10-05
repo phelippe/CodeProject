@@ -10,7 +10,9 @@ namespace CodeProject\Services;
 
 
 use CodeProject\Repositories\ProjectFileRepository;
+use CodeProject\Validators\ProjectFileValidator;
 use Illuminate\Filesystem\Filesystem;
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Contracts\Filesystem\Factory as Storage;
 
@@ -43,24 +45,44 @@ class ProjectFileService
      * @internal param ProjectTaskService $service
      */
     public function __construct(ProjectFileRepository $repository,
-                                #ProjectFileValidator $validator,
+                                ProjectFileValidator $validator,
                                 Filesystem $filesystem,
                                 Storage $storage){
         $this->repository = $repository;
-        #$this->validator = $validator;
+        $this->validator = $validator;
         $this->filesystem = $filesystem;
         $this->storage = $storage;
     }
 
     public function create(array $data){
         try {
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
+
             #dd($this->filesystem->get($data['file']));
+
             $file = $this->repository->create($data);
+
             #dd($file['data']['id']);
             #$file = new \stdClass();
             #$file->id = 1;
             #$this->storage->put( $file['data']['id'].'.'.$data['extension'], $this->filesystem->get($data['file']) );
+
             $this->storage->put( $file->getFileName(), $this->filesystem->get($data['file']) );
+        } catch(ValidatorException $e){
+            return [
+                'error' => true,
+                'message' => $e->getMessageBag(),
+            ];
+        }
+    }
+
+    public function update(array $data, $id_project, $id_file){
+        try {
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+            $file = $this->repository->update($data, $id_file);
+
+            return $file;
         } catch(ValidatorException $e){
             return [
                 'error' => true,

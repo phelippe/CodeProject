@@ -40,6 +40,20 @@ class ProjectFileController extends Controller
     }
 
     /**
+     * @param $id_project
+     * @param $id_file
+     * @return mixed
+     */
+    public function show($id_project, $id_file)
+    {
+        $rtrn = $this->repository->find($id_file);
+        #$rtrn = $this->repository->all();
+        #dd($rtrn);
+
+        return $rtrn;
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request

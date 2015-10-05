@@ -13,6 +13,7 @@ angular.module('app.controllers')
             id_project: $routeParams.id_project,
             id_file: $routeParams.id_file
         });
+        console.log($scope.project_file);
         $scope.page_title = 'Editar arquivo';
         $scope.btn_text = 'Editar';
 
@@ -22,7 +23,7 @@ angular.module('app.controllers')
                     id_project: $routeParams.id_project,
                     id_file: $routeParams.id_file,
                 }, $scope.project_file, function () {
-                    $location.path('/project/' + $routeParams.id_project + '/file');
+                    $location.path('/projetos/' + $routeParams.id_project + '/files');
                 });
             }
         }
