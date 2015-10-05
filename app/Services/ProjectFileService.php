@@ -120,10 +120,9 @@ class ProjectFileService
 
     public function destroy($project_id, $file_id){
         try {
-            $file = $this->repository->find($file_id);
+            $file = $this->repository->skipPresenter()->find($file_id);
 
             $this->repository->delete($file->id);
-            #$this->storage->delete( $file->id.'.'.$file->extension );
             $this->storage->delete( $file->getFileName() );
         } catch(ValidatorException $e){
             return [
