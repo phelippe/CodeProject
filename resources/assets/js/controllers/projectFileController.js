@@ -80,13 +80,14 @@ angular.module('app.controllers')
 
         $scope.page_title = 'Deletar arquivo';
         $scope.btn_text = 'Deletar';
+        //console.log($scope.project_file);
 
         $scope.delete = function () {
             $scope.project_file.$delete({
                 id_project: $scope.project_file.project_id,
                 id_file: $scope.project_file.id,
             }).then(function () {
-                $location.path('/project/' + $routeParams.id_project + '/file');
+                $location.path('/projetos/' + $routeParams.id_project + '/files');
             });
         }
     }])

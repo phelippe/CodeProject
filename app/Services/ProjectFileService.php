@@ -60,7 +60,7 @@ class ProjectFileService
 
             #dd($this->filesystem->get($data['file']));
 
-            $file = $this->repository->create($data);
+            $file = $this->repository->skipPresenter()->create($data);
 
             #dd($file['data']['id']);
             #$file = new \stdClass();
