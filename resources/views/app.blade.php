@@ -40,12 +40,12 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/#/projetos') }}">Home</a></li>
+					<li><a href="{{ url('/#/projetos') }}">Projetos</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
-						<li><a href="{{ url('/auth/login') }}">Login</a></li>
+						<li><a href="{{ url('/#/login') }}">Login</a></li>
 						<li><a href="{{ url('/auth/register') }}">Register</a></li>
 					@else
 						<li class="dropdown">
@@ -89,6 +89,7 @@
         <script src="{{ asset('build/js/controllers/projectNoteController.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectFileController.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectTaskController.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/projectMemberController.js') }}"></script>
 
 		{{--DIRECTIVES--}}
 		<script src="{{ asset('build/js/directives/projectFileDownload.js') }}"></script>
@@ -101,6 +102,7 @@
 		<script src="{{ asset('build/js/services/projectNote.js') }}"></script>
 		<script src="{{ asset('build/js/services/projectFile.js') }}"></script>
 		<script src="{{ asset('build/js/services/projectTask.js') }}"></script>
+		<script src="{{ asset('build/js/services/projectMember.js') }}"></script>
 
 	@else
         <script src="{{ elixir('js/all.js') }}"></script>

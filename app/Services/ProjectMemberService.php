@@ -55,7 +55,10 @@ class ProjectMemberService
     }
 
     public function index($id_project){
-        return $this->project_repository->find($id_project)->members()->withPivot("id")->get();
+        #$rtrn = $this->project_repository->find($id_project)->members()->withPivot("id")->get();
+        $rtrn = $this->repository->findWhere(['project_id'=>$id_project]);
+        #dd($rtrn);
+        return $rtrn;
     }
 
     public function show($id_project, $id_member){

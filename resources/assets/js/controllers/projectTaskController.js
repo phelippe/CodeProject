@@ -66,15 +66,23 @@ angular.module('app.controllers')
                     opened: false,
                 }
             };
+            $scope.start_date = {
+                status: {
+                    opened: false,
+                }
+            };
             $scope.open = function($event){
                 $scope.due_date.status.opened = true;
+            };
+            $scope.open_startDate = function($event){
+                $scope.start_date.status.opened = true;
             };
 
 
             $scope.save = function () {
                 if ($scope.form.$valid) {
                     $scope.project_task.$save({id_project: $routeParams.id_project}).then(function () {
-                        $location.path('/projetos/' + $routeParams.id_project + '/tasks');
+                        $location.path('/projetos/' + $routeParams.id_project + '/tarefas');
                     });
                 }
             }

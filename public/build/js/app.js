@@ -183,6 +183,28 @@ app.config([
                 controller: 'ProjectTaskDeleteController',
             })
 
+            //Project Tasks
+            .when('/projetos/:id_project/membros', {
+                templateUrl: 'build/views/project_members/list.html',
+                controller: 'ProjectMemberListController',
+            })
+            .when('/projetos/:id_project/membros/new', {
+                templateUrl: 'build/views/project_members/new.html',
+                controller: 'ProjectMemberNewController',
+            })
+            .when('/projetos/:id_project/membros/:id_member', {
+                templateUrl: 'build/views/project_members/show.html',
+                controller: 'ProjectMemberShowController',
+            })
+            .when('/projetos/:id_project/membros/:id_member/edit', {
+                templateUrl: 'build/views/project_members/edit.html',
+                controller: 'ProjectMemberEditController',
+            })
+            .when('/projetos/:id_project/membros/:id_member/delete', {
+                templateUrl: 'build/views/project_members/delete.html',
+                controller: 'ProjectMemberDeleteController',
+            })
+
         ;
 
         OAuthProvider.configure({

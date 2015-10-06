@@ -31,7 +31,7 @@ class ProjectMemberRepositoryEloquent extends BaseRepository implements ProjectM
         $this->pushCriteria( app(RequestCriteria::class) );
     }
 
-    /*public function presenter(){
+    public function presenter(){
         return ProjectMemberPresenter::class;
-    }*/
+    }
 }

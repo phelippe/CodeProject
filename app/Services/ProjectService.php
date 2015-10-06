@@ -71,7 +71,7 @@ class ProjectService
     public function show($id){
         try {
             //hidden nao funciona
-            $rtrn = $this->repository->skipPresenter()->with(['owner', 'client', 'notes', 'members', 'tasks'])->find($id);
+            $rtrn = $this->repository->with(['owner', 'client', 'notes', 'members', 'tasks'])->find($id);
             #dd($rtrn);
             return $rtrn;
         } catch(ModelNotFoundException $e){
