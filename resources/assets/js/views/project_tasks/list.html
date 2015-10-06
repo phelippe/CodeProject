@@ -8,26 +8,21 @@
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Cliente</th>
-                                <th>Status</th>
-                                <th>Progress</th>
+                                <th>Estado</th>
+                                <th>Criada em</th>
                                 <th>Prazo</th>
-                                <th>Gerente?</th>
-                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="o in projects">
+                            <tr ng-repeat="o in tasks">
                                 <td>{{ o.name }}</td>
-                                <td>{{ o.client.data.name }}</td>
                                 <td>{{ o.status }}</td>
-                                <td>{{ o.progress }}</td>
+                                <td>{{ o.created_at.date | dateBrCHora }}</td>
                                 <td>{{ o.due_date | dateBr }}</td>
-                                <td></td>
                                 <td>
-                                    <a ng-href="#/projetos/{{ o.id }}" >Ver</a> |
-                                    <a ng-href="#/projetos/{{ o.id }}/editar" >Editar</a> |
-                                    <a ng-href="#/projetos/{{ o.id }}/deletar" >Deletar</a>
+                                    <a ng-href="#/projetos/{{ o.project_id }}/tarefas/{{ o.id }}" >Ver</a> |
+                                    <a ng-href="#/projetos/{{ o.project_id }}/tarefas/{{ o.id }}/edit" >Editar</a> |
+                                    <a ng-href="#/projetos/{{ o.project_id }}/tarefas/{{ o.id }}/delete" >Deletar</a>
                                 </td>
                             </tr>
                         </tbody>

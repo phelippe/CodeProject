@@ -9,6 +9,7 @@
                             <tr>
                                 <th>Titulo</th>
                                 <th>Nota</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -16,9 +17,9 @@
                                 <td>{{ o.title }}</td>
                                 <td>{{ o.note | limitTo: 50 }}...</td>
                                 <td>
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}" >Ver</a> |
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/edit" >Editar</a> |
-                                    <a ng-href="#/project/{{ o.project_id }}/notes/{{ o.id }}/delete" >Deletar</a>
+                                    <a ng-href="#/projetos/{{ o.project_id }}/notas/{{ o.id }}" >Ver</a> |
+                                    <a ng-href="#/projetos/{{ o.project_id }}/notas/{{ o.id }}/edit" >Editar</a> |
+                                    <a ng-href="#/projetos/{{ o.project_id }}/notas/{{ o.id }}/delete" >Deletar</a>
                                 </td>
                             </tr>
                         </tbody>

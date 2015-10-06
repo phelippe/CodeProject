@@ -37,8 +37,8 @@ $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator 
         'client_id' => \CodeProject\Entities\Client::all()->lists('id')->random(1),
         'name' => $faker->name,
         'description' => $faker->sentence,
-        'progress' => $faker->biasedNumberBetween,
-        'status' => $faker->randomNumber(1),
+        'progress' => $faker->NumberBetween(0,100),
+        'status' => $faker->numberBetween(1,3),
         'due_date' => $faker->dateTime,
     ];
 });
@@ -57,7 +57,7 @@ $factory->define(CodeProject\Entities\ProjectTask::class, function (Faker\Genera
         'name' => $faker->word,
         'start_date' => $faker->dateTime,
         'due_date' => $faker->dateTime,
-        'status' => $faker->word,
+        'status' => $faker->numberBetween(1,3),
     ];
 });
 

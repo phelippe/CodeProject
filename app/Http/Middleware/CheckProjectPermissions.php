@@ -4,7 +4,6 @@ namespace CodeProject\Http\Middleware;
 
 use Closure;
 use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Repositories\UserRepository;
 
 class CheckProjectPermissions
 {
@@ -16,7 +15,7 @@ class CheckProjectPermissions
     /**
      * @param ProjectRepository $repository
      */
-    public function __construct(UserRepository $repository){
+    public function __construct(ProjectRepository $repository){
 
         $this->repository = $repository;
     }
@@ -31,6 +30,15 @@ class CheckProjectPermissions
     public function handle($request, Closure $next)
     {
         $user_id = \Authorizer::getResourceOwnerId();
+
+        $rtrn = $this->repository->findWithOwnerAndMember($user_id);
+
+        if(count($rtrn)){
+            return $next($request);
+        }
+        return ['error'=>'Access forbidden'];
+
+
         $project_id = $request->project;
 
         /*if( $this->repository->isMember($project_id,$user_id) == false){

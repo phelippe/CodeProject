@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ page_title }}</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" name="form" role="form" method="POST" ng-submit="save()">
+
+                        <div class="form-group" ng-class="{'has-error': !form.name.$valid && form.name.$touched}">
+                            <label class="col-md-4 control-label">Nome:</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="title" ng-model="project_task.name" required>
+                                <div ng-messages="form.name.$error" class="help-block" ng-show="form.name.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.status.$valid && form.status.$touched}">
+                            <label class="col-md-4 control-label">Status:</label>
+                            <div class="col-md-6">
+                                <select class="form-control" name="status" required
+                                        ng-model="project_task.status" ng-options="o.value as o.label for o in status">
+                                    <option value=""><-Selecione uma opção-></option>
+                                </select>
+                                <div ng-messages="form.status.$error" class="help-block" ng-show="form.status.$touched">
+                                    <div ng-message="required">Campo obrigatório</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.due_date.$valid && form.due_date.$touched}">
+                            <label class="col-md-4 control-label">Início:</label>
+                            <div class="col-md-6">
+                                <p class="input-group">
+                                    <input type="text" class="form-control" name="due_date" datepicker-popup="dd/MM/yyyy"
+                                           ng-model="project_task.start_date" is-open="due_date.status.opened"
+                                           close-text="Fechar" required />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open_startDate($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.due_date.$valid && form.due_date.$touched}">
+                            <label class="col-md-4 control-label">Prazo:</label>
+                            <div class="col-md-6">
+                                <p class="input-group">
+                                    <input type="text" class="form-control" name="due_date" datepicker-popup="dd/MM/yyyy"
+                                           ng-model="project_task.due_date" is-open="due_date.status.opened"
+                                           close-text="Fechar" required />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">{{ btn_text }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

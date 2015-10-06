@@ -38,7 +38,13 @@ class ProjectTaskService
 
     public function show($project_id, $task_id){
         try {
-            return $this->repository->findWhere(['project_id'=>$project_id, 'id'=>$task_id]);
+            $rtrn = $this->repository->findWhere(['project_id'=>$project_id, 'id'=>$task_id]);
+
+            #dd($rtrn['data'][0]);
+            #dd($rtrn);
+            $rtrn = $rtrn['data'][0];
+
+            return $rtrn;
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,

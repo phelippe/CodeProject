@@ -118,23 +118,23 @@ app.config([
             })
 
             //Project Notes
-            .when('/project/:id_project/notes', {
+            .when('/projetos/:id_project/notas', {
                 templateUrl: 'build/views/project_notes/list.html',
                 controller: 'ProjectNoteListController',
             })
-            .when('/project/:id_project/notes/new', {
+            .when('/projetos/:id_project/notas/new', {
                 templateUrl: 'build/views/project_notes/new.html',
                 controller: 'ProjectNoteNewController',
             })
-            .when('/project/:id_project/notes/:id_note', {
+            .when('/projetos/:id_project/notas/:id_note', {
                 templateUrl: 'build/views/project_notes/show.html',
                 controller: 'ProjectNoteShowController',
             })
-            .when('/project/:id_project/notes/:id_note/edit', {
+            .when('/projetos/:id_project/notas/:id_note/edit', {
                 templateUrl: 'build/views/project_notes/edit.html',
                 controller: 'ProjectNoteEditController',
             })
-            .when('/project/:id_project/notes/:id_note/delete', {
+            .when('/projetos/:id_project/notas/:id_note/delete', {
                 templateUrl: 'build/views/project_notes/delete.html',
                 controller: 'ProjectNoteDeleteController',
             })
@@ -160,6 +160,29 @@ app.config([
                 templateUrl: 'build/views/project_file/delete.html',
                 controller: 'ProjectFileDeleteController',
             })
+
+            //Project Tasks
+            .when('/projetos/:id_project/tarefas', {
+                templateUrl: 'build/views/project_tasks/list.html',
+                controller: 'ProjectTaskListController',
+            })
+            .when('/projetos/:id_project/tarefas/new', {
+                templateUrl: 'build/views/project_tasks/new.html',
+                controller: 'ProjectTaskNewController',
+            })
+            .when('/projetos/:id_project/tarefas/:id_task', {
+                templateUrl: 'build/views/project_tasks/show.html',
+                controller: 'ProjectTaskShowController',
+            })
+            .when('/projetos/:id_project/tarefas/:id_task/edit', {
+                templateUrl: 'build/views/project_tasks/edit.html',
+                controller: 'ProjectTaskEditController',
+            })
+            .when('/projetos/:id_project/tarefas/:id_task/delete', {
+                templateUrl: 'build/views/project_tasks/delete.html',
+                controller: 'ProjectTaskDeleteController',
+            })
+
         ;
 
         OAuthProvider.configure({

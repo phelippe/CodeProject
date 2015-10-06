@@ -58,7 +58,11 @@ class ProjectService
 
     public function index()
     {
-        $rtrn = $this->user_repository->skipPresenter()->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members', 'owner'])->get();
+
+        #$rtrn = $this->user_repository->skipPresenter()->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members', 'owner'])->get();
+
+        $rtrn = $this->repository->findWithOwnerAndMember(Authorizer::getResourceOwnerId());
+
         #$rtrn = $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members', 'owner'])->get();
         #return $this->user_repository->find(Authorizer::getResourceOwnerId())->projects()->with(['client', 'tasks', 'notes', 'members'])->get();
         return $rtrn;

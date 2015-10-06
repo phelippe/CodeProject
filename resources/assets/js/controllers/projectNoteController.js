@@ -22,7 +22,7 @@ angular.module('app.controllers')
                     id_project: $routeParams.id_project,
                     id_note: $routeParams.id_note,
                 }, $scope.project_note, function () {
-                    $location.path('/project/' + $routeParams.id_project + '/notes');
+                    $location.path('/projetos/' + $routeParams.id_project + '/notas');
                 });
             }
         }
@@ -39,7 +39,7 @@ angular.module('app.controllers')
             $scope.save = function () {
                 if ($scope.form.$valid) {
                     $scope.project_note.$save({id_project: $routeParams.id_project}).then(function () {
-                        $location.path('/project/' + $routeParams.id_project + '/notes');
+                        $location.path('/projetos/' + $routeParams.id_project + '/notas');
                     });
                 }
             }
@@ -60,7 +60,7 @@ angular.module('app.controllers')
                 id_project: $scope.project_note.project_id,
                 id_note: $scope.project_note.id,
             }).then(function () {
-                $location.path('/project/' + $routeParams.id_project + '/notes');
+                $location.path('/projetos/' + $routeParams.id_project + '/notas');
             });
         }
     }])

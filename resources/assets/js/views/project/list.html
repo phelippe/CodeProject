@@ -12,15 +12,18 @@
                                 <th>Status</th>
                                 <th>Progress</th>
                                 <th>Prazo</th>
+                                <th>Gerente?</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="o in projects">
                                 <td>{{ o.name }}</td>
-                                <td>{{ o.client.name }}</td>
+                                <td>{{ o.client.data.name }}</td>
                                 <td>{{ o.status }}</td>
                                 <td>{{ o.progress }}</td>
                                 <td>{{ o.due_date | dateBr }}</td>
+                                <td></td>
                                 <td>
                                     <a ng-href="#/projetos/{{ o.id }}" >Ver</a> |
                                     <a ng-href="#/projetos/{{ o.id }}/editar" >Editar</a> |

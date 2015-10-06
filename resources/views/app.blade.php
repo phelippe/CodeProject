@@ -40,7 +40,7 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ url('/#/projetos') }}">Home</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -88,6 +88,7 @@
         <script src="{{ asset('build/js/controllers/projectController.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectNoteController.js') }}"></script>
         <script src="{{ asset('build/js/controllers/projectFileController.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/projectTaskController.js') }}"></script>
 
 		{{--DIRECTIVES--}}
 		<script src="{{ asset('build/js/directives/projectFileDownload.js') }}"></script>
@@ -99,6 +100,7 @@
 		<script src="{{ asset('build/js/services/project.js') }}"></script>
 		<script src="{{ asset('build/js/services/projectNote.js') }}"></script>
 		<script src="{{ asset('build/js/services/projectFile.js') }}"></script>
+		<script src="{{ asset('build/js/services/projectTask.js') }}"></script>
 
 	@else
         <script src="{{ elixir('js/all.js') }}"></script>
