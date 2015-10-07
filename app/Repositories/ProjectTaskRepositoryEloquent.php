@@ -28,7 +28,7 @@ class ProjectTaskRepositoryEloquent extends BaseRepository implements ProjectTas
      */
     public function boot()
     {
-        #$this->pushCriteria( app(RequestCriteria::class) );
+        //Não dá pra usar 2 pushcriteria (esse + o de project)
         $this->pushCriteria( app('Prettus\Repository\Criteria\RequestCriteria') );
     }
 

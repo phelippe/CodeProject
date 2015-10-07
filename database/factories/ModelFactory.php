@@ -57,7 +57,7 @@ $factory->define(CodeProject\Entities\ProjectTask::class, function (Faker\Genera
         'name' => $faker->word,
         'start_date' => $faker->dateTime,
         'due_date' => $faker->dateTime,
-        'status' => $faker->numberBetween(1,3),
+        'status' => $faker->numberBetween(1,2),
     ];
 });
 

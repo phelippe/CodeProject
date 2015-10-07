@@ -19,6 +19,12 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
                 {value: 3, label: 'Concluido'},
             ]
         },
+        projectTask: {
+            status: [
+                {value: 1, label: 'Incompleta'},
+                {value: 2, label: 'Completa'},
+            ]
+        },
         urls:{
             projectFile: '/project/{{id_project}}/file/{{id_file}}'
         },
@@ -170,10 +176,10 @@ app.config([
                 templateUrl: 'build/views/project_tasks/new.html',
                 controller: 'ProjectTaskNewController',
             })
-            .when('/projetos/:id_project/tarefas/:id_task', {
+            /*.when('/projetos/:id_project/tarefas/:id_task', {
                 templateUrl: 'build/views/project_tasks/show.html',
                 controller: 'ProjectTaskShowController',
-            })
+            })*/
             .when('/projetos/:id_project/tarefas/:id_task/edit', {
                 templateUrl: 'build/views/project_tasks/edit.html',
                 controller: 'ProjectTaskEditController',
@@ -183,7 +189,7 @@ app.config([
                 controller: 'ProjectTaskDeleteController',
             })
 
-            //Project Tasks
+            //Project Member
             .when('/projetos/:id_project/membros', {
                 templateUrl: 'build/views/project_members/list.html',
                 controller: 'ProjectMemberListController',

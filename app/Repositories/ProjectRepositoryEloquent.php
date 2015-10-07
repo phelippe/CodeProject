@@ -28,7 +28,7 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
      */
     public function boot()
     {
-        $this->pushCriteria( app(RequestCriteria::class) );
+        //$this->pushCriteria( app(RequestCriteria::class) );
     }
 
     /*public function isOwner($id, $user_id)
