@@ -25,7 +25,7 @@ class ProjectMember extends Model implements Transformable
 		return $this->belongsTo(Project::class);
 	}
 
-	public function user(){
-		return $this->belongsTo(User::class);
+	public function member(){
+		return $this->belongsTo(User::class, 'user_id', 'id');
 	}
 }

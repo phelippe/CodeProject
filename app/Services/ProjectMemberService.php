@@ -18,40 +18,13 @@ use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectMemberService
 {
-
-
-    /**
-     * @var ProjectMemberRepository
-     */
     private $repository;
-    /**
-     * @var ProjectMemberService
-     */
     private $validator;
-    /**
-     * @var ProjectRepository
-     */
-    private $user_repository;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
 
-    /**
-     * @param ProjectMemberRepository $repository
-     * @param ProjectMemberValidator $validator
-     * @param ProjectRepository $project_repository
-     * @param UserRepository $userRepository
-     * @internal param ProjectMemberService $service
-     */
     public function __construct(ProjectMemberRepository $repository,
-                                ProjectMemberValidator $validator,
-                                ProjectRepository $project_repository,
-                                UserRepository $userRepository){
+                                ProjectMemberValidator $validator){
         $this->repository = $repository;
         $this->validator = $validator;
-        $this->project_repository = $project_repository;
-        $this->userRepository = $userRepository;
     }
 
     public function index($id_project){
@@ -61,9 +34,12 @@ class ProjectMemberService
         return $rtrn;
     }
 
-    public function show($id_project, $id_member){
+    public function show($id_project, $id_project_member){
         try {
-            return $this->repository->find($id_member)->user;
+            #return $this->repository->find($id_member)->user;
+            $rtrn = $this->repository->find($id_project_member);
+            #dd($id_project, $id_project_member, $rtrn);
+            return $rtrn;
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
@@ -88,9 +64,9 @@ class ProjectMemberService
 
     public function destroy($id_member){
         try {
-            $this->repository->delete($id_member);
+            $this->repository->skipPresenter()->delete($id_member);
             #acento aqui funcionou normal
-            return "Membro desvinculado com sucesso";
+            return ['message' => 'Membro desvinculado com sucesso'];
         } catch(ModelNotFoundException $e){
             return [
                 'error' => true,
@@ -99,7 +75,7 @@ class ProjectMemberService
         }
     }
 
-    public function isMember($id_project, $id_user)
+    /*public function isMember($id_project, $id_user)
     {
         $is = $this->repository->findWhere([
             'project_id'=>$id_project,
@@ -110,6 +86,6 @@ class ProjectMemberService
             return 'true';
         }
         return 'false';
-    }
+    }*/
 
 }

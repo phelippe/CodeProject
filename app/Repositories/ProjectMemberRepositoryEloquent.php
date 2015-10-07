@@ -13,6 +13,10 @@ use CodeProject\Entities\ProjectMember;
  */
 class ProjectMemberRepositoryEloquent extends BaseRepository implements ProjectMemberRepository
 {
+    protected $fieldSearchable = [
+        'name',
+    ];
+
     /**
      * Specify Model class name
      *

@@ -22,11 +22,16 @@ class ProjectMemberTransformer extends TransformerAbstract
             'email' => $user->email,
         ];
     }*/
-    public function transform(ProjectMember $user){
+    protected $defaultIncludes = ['user'];
+
+    public function transform(ProjectMember $member){
         return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
+            'member_id' => $member->id,
+            'project_id' => $member->project_id,
         ];
+    }
+
+    public function includeUser(ProjectMember $member){
+        return $this->item($member->member, new MemberTransformer());
     }
 }

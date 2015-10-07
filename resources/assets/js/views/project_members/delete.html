@@ -4,19 +4,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{ page_title }}</div>
                 <div class="panel-body">
-                    <p>Deseja realmente excluir esta nota de projeto</p>
-                    <ul>
-                        <li><strong>Nome:</strong> {{project_task.name}}</li>
-                        <li><strong>Estado:</strong> {{project_task.status}}</li>
-                        <li><strong>Início:</strong> {{ project_task.start_date | dateBr }}</li>
-                        <li><strong>Fim:</strong> {{project_task.due_date | dateBr }}</li>
-                    </ul>
+                    <p>Deseja realmente remover <strong>{{project_member.user.data.name}}</strong> do projeto</p>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-danger" ng-click="delete()">{{ btn_text }}</button>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-danger" ng-click="delete()">{{ btn_text }}</button>
                         </div>
+                    </div>
                     </form>
                 </div>
             </div>

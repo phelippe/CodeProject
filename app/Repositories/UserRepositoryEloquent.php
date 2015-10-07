@@ -17,6 +17,12 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      *
      * @return string
      */
+
+    protected $fieldSearchable = [
+        'name',
+        //'id',
+    ];
+
     public function model()
     {
         return User::class;

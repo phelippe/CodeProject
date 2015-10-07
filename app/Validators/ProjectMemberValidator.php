@@ -17,7 +17,7 @@ class ProjectMemberValidator extends LaravelValidator
 
     protected $rules = [
         #@TODO: fazer unique
-        #'project_id' => 'required|integer',
+        'project_id' => 'required|integer',
         'user_id' => 'required|integer',
     ];
 

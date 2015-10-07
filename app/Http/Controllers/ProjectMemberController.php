@@ -71,9 +71,9 @@ class ProjectMemberController extends Controller
         return $this->service->destroy($id_member);
     }
 
-    public function isMember($id_project, $id_user)
+    /*public function isMember($id_project, $id_user)
     {
         return $this->service->isMember($id_project, $id_user);
-    }
+    }*/
 
 }

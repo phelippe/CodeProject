@@ -123,7 +123,7 @@ app.config([
                 controller: 'ProjectShowController',
             })
 
-            //Project Notes
+            //PROJECT NOTES
             .when('/projetos/:id_project/notas', {
                 templateUrl: 'build/views/project_notes/list.html',
                 controller: 'ProjectNoteListController',
@@ -145,7 +145,7 @@ app.config([
                 controller: 'ProjectNoteDeleteController',
             })
 
-            //Project Files
+            //PROJECT FILES
             .when('/projetos/:id_project/files', {
                 templateUrl: 'build/views/project_file/list.html',
                 controller: 'ProjectFileListController',
@@ -167,7 +167,7 @@ app.config([
                 controller: 'ProjectFileDeleteController',
             })
 
-            //Project Tasks
+            //PROJECT TASKS
             .when('/projetos/:id_project/tarefas', {
                 templateUrl: 'build/views/project_tasks/list.html',
                 controller: 'ProjectTaskListController',
@@ -189,22 +189,10 @@ app.config([
                 controller: 'ProjectTaskDeleteController',
             })
 
-            //Project Member
+            //PROJECT MEMBERS
             .when('/projetos/:id_project/membros', {
                 templateUrl: 'build/views/project_members/list.html',
                 controller: 'ProjectMemberListController',
-            })
-            .when('/projetos/:id_project/membros/new', {
-                templateUrl: 'build/views/project_members/new.html',
-                controller: 'ProjectMemberNewController',
-            })
-            .when('/projetos/:id_project/membros/:id_member', {
-                templateUrl: 'build/views/project_members/show.html',
-                controller: 'ProjectMemberShowController',
-            })
-            .when('/projetos/:id_project/membros/:id_member/edit', {
-                templateUrl: 'build/views/project_members/edit.html',
-                controller: 'ProjectMemberEditController',
             })
             .when('/projetos/:id_project/membros/:id_member/delete', {
                 templateUrl: 'build/views/project_members/delete.html',
@@ -229,6 +217,10 @@ app.config([
     }]);
 
 app.run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth) {
+    /*$rootScope.$on('$routeChangeStart', function(event,nextRoute,currentRoute){
+
+    });*/
+
     $rootScope.$on('oauth:error', function (event, rejection) {
         // Ignore `invalid_grant` error - should be catched on `LoginController`.
         if ('invalid_grant' === rejection.data.error) {
