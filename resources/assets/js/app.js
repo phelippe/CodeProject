@@ -25,23 +25,23 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
                 {value: 2, label: 'Completa'},
             ]
         },
-        urls:{
+        urls: {
             projectFile: '/project/{{id_project}}/file/{{id_file}}'
         },
         utils: {
-            transformRequest: function(data){
-                if(angular.isObject(data)){
+            transformRequest: function (data) {
+                if (angular.isObject(data)) {
                     return $httpParamSerializerProvider.$get()(data);
                 }
                 return data;
             },
             transformResponse: function (data, headers) {
                 var headersGetter = headers();
-                if(headersGetter['content-type'] == 'application/json' ||
-                    headersGetter['content-type'] == 'text/json' ){
+                if (headersGetter['content-type'] == 'application/json' ||
+                    headersGetter['content-type'] == 'text/json') {
                     var dataJson = JSON.parse(data);
                     //Verifica se possui a propriedade 'data'
-                    if(dataJson.hasOwnProperty('data')){
+                    if (dataJson.hasOwnProperty('data')) {
                         dataJson = dataJson.data;
                     }
                     return dataJson;
@@ -65,10 +65,8 @@ app.config([
 
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-
         $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
         $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
-
         $httpProvider.interceptors.push('oauthFixInterceptor');
 
         $routeProvider
@@ -78,7 +76,7 @@ app.config([
             })
             .when('/logout', {
                 resolve: {
-                    logout: ['$location', 'OAuthToken', function($location, OAuthToken){
+                    logout: ['$location', 'OAuthToken', function ($location, OAuthToken) {
                         OAuthToken.removeToken();
                         $location.path('/login');
                     }],
@@ -187,9 +185,9 @@ app.config([
                 controller: 'ProjectTaskNewController',
             })
             /*.when('/projetos/:id_project/tarefas/:id_task', {
-                templateUrl: 'build/views/project_tasks/show.html',
-                controller: 'ProjectTaskShowController',
-            })*/
+             templateUrl: 'build/views/project_tasks/show.html',
+             controller: 'ProjectTaskShowController',
+             })*/
             .when('/projetos/:id_project/tarefas/:id_task/edit', {
                 templateUrl: 'build/views/project_tasks/edit.html',
                 controller: 'ProjectTaskEditController',
@@ -226,27 +224,32 @@ app.config([
         });
     }]);
 
-app.run(['$rootScope', '$location', 'OAuth', function ($rootScope, $location, OAuth) {
-    $rootScope.$on('$routeChangeStart', function(event,nextRoute,currentRoute){
-        if(nextRoute.$$route.originalPath != '/login'){
-            if(!OAuth.isAuthenticated()){
+app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $location, $http, OAuth) {
+    $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+        if (nextRoute.$$route.originalPath != '/login') {
+            if (!OAuth.isAuthenticated()) {
                 $location.path('login');
             }
         }
     });
 
-    $rootScope.$on('oauth:error', function (event, rejection) {
+    $rootScope.$on('oauth:error', function (event, data) {
+        console.log('erro oauth');
         // Ignore `invalid_grant` error - should be catched on `LoginController`.
-        if ('invalid_grant' === rejection.data.error) {
+        if ('invalid_grant' === data.rejection.data.error) {
             return;
         }
 
         // Refresh token when a `invalid_token` error occurs.
-        //if ('invalid_token' === rejection.data.error) {
-        if ('access_denied' === rejection.data.error) {
-            return OAuth.getRefreshToken();
+        if ('access_denied' === data.rejection.data.error) {
+            return OAuth.getRefreshToken().then(function (data) {
+                return $http(data.rejection.config).then(function (response) {
+                    return data.deferred.resolve(response);
+                });
+            });
         }
 
+        console.log('antes do login');
         // Redirect to `/login` with the `error_reason`.
         return $location.path('login');
     });
