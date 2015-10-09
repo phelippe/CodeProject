@@ -234,7 +234,6 @@ app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $loc
     });
 
     $rootScope.$on('oauth:error', function (event, data) {
-        console.log('erro oauth');
         // Ignore `invalid_grant` error - should be catched on `LoginController`.
         if ('invalid_grant' === data.rejection.data.error) {
             return;
@@ -242,14 +241,13 @@ app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $loc
 
         // Refresh token when a `invalid_token` error occurs.
         if ('access_denied' === data.rejection.data.error) {
-            return OAuth.getRefreshToken().then(function (data) {
+            return OAuth.getRefreshToken().then(function (response) {
                 return $http(data.rejection.config).then(function (response) {
                     return data.deferred.resolve(response);
                 });
             });
         }
 
-        console.log('antes do login');
         // Redirect to `/login` with the `error_reason`.
         return $location.path('login');
     });
