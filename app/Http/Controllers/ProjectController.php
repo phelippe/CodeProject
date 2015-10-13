@@ -42,13 +42,14 @@ class ProjectController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         #return $this->repository->hidden(['owner_id', 'client_id'])->with(['owner', 'client'])->all();
         /*return $this->repository->
             with(['client', 'tasks', 'notes', 'members'])->
             all()->members()->where(['user_id' => Authorizer::getResourceOwnerId()]);*/
-        return $this->service->index();
+        #return $this->service->index();
+        return $this->repository->findOwner(Authorizer::getResourceOwnerId(), $request->query->get('limit'));
     }
 
     /**

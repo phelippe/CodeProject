@@ -1,8 +1,33 @@
 angular.module('app.controllers')
-    .controller('ProjectListController', ['$scope', '$routeParams', 'Project', function ($scope, $routeParams, Project) {
-        $scope.projects = Project.query();
-        $scope.page_title = 'Listagem de projetos';
-    }])
+    .controller('ProjectListController', [
+        '$scope', '$routeParams', 'Project', function ($scope, $routeParams, Project) {
+            $scope.page_title = 'Listagem de projetos';
+
+            $scope.projects = [];
+            $scope.totalProjects = 0;
+            $scope.projectsPerPage = 3;
+
+            $scope.pagination = {
+                current: 1
+            };
+
+            $scope.pageChanged = function (newPage) {
+                getResultsPage(newPage);
+            };
+
+            function getResultsPage(pageNumber) {
+                $scope.projects = Project.query({
+                    page: pageNumber,
+                    limit: $scope.projectsPerPage,
+                }, function (data) {
+                    $scope.projects = data.data;
+                    $scope.totalProjects = data.meta.pagination.total;
+                });
+            }
+
+            getResultsPage(1);
+
+        }])
     .controller('ProjectShowController', ['$scope', '$routeParams', 'Project', function ($scope, $routeParams, Project) {
         $scope.project = Project.get({id_project: $routeParams.id_project});
         $scope.page_title = 'Projeto';
@@ -16,7 +41,6 @@ angular.module('app.controllers')
         Project.get({
             id_project: $routeParams.id_project,
         }, function (data) {
-            console.log(data);
             $scope.project = data;
             $scope.client_selected = data.client.data;
         });
@@ -37,7 +61,7 @@ angular.module('app.controllers')
             }).$promise;
         }
 
-        $scope.selectClient = function(item){
+        $scope.selectClient = function (item) {
             $scope.project.client_id = item.id;
         }
 
@@ -67,7 +91,7 @@ angular.module('app.controllers')
                     opened: false,
                 }
             };
-            $scope.open = function($event){
+            $scope.open = function ($event) {
                 $scope.due_date.status.opened = true;
             };
 
@@ -95,7 +119,7 @@ angular.module('app.controllers')
                 }).$promise;
             }
 
-            $scope.selectClient = function(item){
+            $scope.selectClient = function (item) {
                 $scope.project.client_id = item.id;
             }
 
