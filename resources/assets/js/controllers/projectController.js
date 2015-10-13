@@ -16,21 +16,12 @@ angular.module('app.controllers')
         Project.get({
             id_project: $routeParams.id_project,
         }, function (data) {
+            console.log(data);
             $scope.project = data;
-            $scope.client_selected = data.client;
+            $scope.client_selected = data.client.data;
         });
         //$scope.clients = Client.query();
         $scope.status = appConfig.project.status;
-
-        $scope.update = function () {
-            if ($scope.form.$valid) {
-                Project.update({
-                    id_project: $routeParams.id_project,
-                }, $scope.project, function () {
-                    $location.path('/projetos');
-                });
-            }
-        }
 
         $scope.formatName = function (model) {
             if (model) {
@@ -48,6 +39,16 @@ angular.module('app.controllers')
 
         $scope.selectClient = function(item){
             $scope.project.client_id = item.id;
+        }
+
+        $scope.update = function () {
+            if ($scope.form.$valid) {
+                Project.update({
+                    id_project: $routeParams.id_project,
+                }, $scope.project, function () {
+                    $location.path('/projetos');
+                });
+            }
         }
 
     }])

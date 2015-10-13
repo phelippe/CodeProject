@@ -67,6 +67,11 @@ app.config([
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
         $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
         $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
+
+        //Removendo interceptors do angular-oauth e do http-auth-interceptor
+        $httpProvider.interceptors.splice(0,1);
+        $httpProvider.interceptors.splice(0,1);
+
         $httpProvider.interceptors.push('oauthFixInterceptor');
 
         $routeProvider
@@ -224,7 +229,8 @@ app.config([
         });
     }]);
 
-app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $location, $http, OAuth) {
+app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth',
+    function ($rootScope, $location, $http, $modal, httpBuffer, OAuth) {
     $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
         if (nextRoute.$$route.originalPath != '/login') {
             if (!OAuth.isAuthenticated()) {
@@ -241,7 +247,7 @@ app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $loc
 
         // Refresh token when a `invalid_token` error occurs.
         if ('access_denied' === data.rejection.data.error) {
-            if(!$rootScope.isRefreshingToken) {
+            /*if(!$rootScope.isRefreshingToken) {
                 $rootScope.isRefreshingToken = true;
                 return OAuth.getRefreshToken().then(function (response) {
                     $rootScope.isRefreshingToken = false;
@@ -249,7 +255,16 @@ app.run(['$rootScope', '$location', '$http', 'OAuth', function ($rootScope, $loc
                         return data.deferred.resolve(response);
                     });
                 });
+            }*/
+            httpBuffer.append(data.rejection.config, data.deferred);
+            if(!$rootScope.loginModalOpened) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'build/views/templates/login-modal.html',
+                    controller: 'LoginModalController',
+                });
+                $rootScope.loginModalOpened = true;
             }
+            return;
         }
 
         // Redirect to `/login` with the `error_reason`.
