@@ -33,6 +33,10 @@ Route::get('teste', function(){
 
 Route::group(['middleware'=>'oauth'], function(){
 
+
+	//Rotas isoladas devem vir antes dos resources!
+    Route::get('user/authenticated', 'UserController@authenticated');
+
     #@TODO: listagem de usuarios para recuperar na listagem de owners no cad. de projeto
     Route::resource('user', 'UserController', ['except'=>['create', 'edit']] );
     Route::resource('client', 'ClientController', ['except'=>['create', 'edit']] );
@@ -48,9 +52,6 @@ Route::group(['middleware'=>'oauth'], function(){
         Route::get('project/{project}/file/{file}/download', 'ProjectFileController@download');
     });
 
-
-
-
     /*Route::resource('project.notes', 'ProjectNoteController', ['except'=>['create', 'edit']] );
     Route::resource('project.tasks', 'ProjectTaskController', ['except'=>['create', 'edit']] );
     Route::resource('project.members', 'ProjectMemberController', ['except'=>['create', 'edit']] );
@@ -59,5 +60,6 @@ Route::group(['middleware'=>'oauth'], function(){
     Route::resource('project.file', 'ProjectFileController', ['only'=>['index', 'show', 'store', 'update', 'destroy']]);
     Route::get('project/{project}/file/{file}/download', 'ProjectFileController@download');*/
 
-    Route::get('user/authenticated', 'UserController@authenticated');
+
+
 });

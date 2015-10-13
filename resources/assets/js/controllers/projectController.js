@@ -12,6 +12,7 @@ angular.module('app.controllers')
             };
 
             $scope.pageChanged = function (newPage) {
+                //console.log(newPage);
                 getResultsPage(newPage);
             };
 
@@ -22,6 +23,7 @@ angular.module('app.controllers')
                 }, function (data) {
                     $scope.projects = data.data;
                     $scope.totalProjects = data.meta.pagination.total;
+                    //console.log($scope.projects, $scope.totalProjects);
                 });
             }
 

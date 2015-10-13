@@ -3,10 +3,10 @@
 namespace CodeProject\Http\Controllers;
 
 use CodeProject\Repositories\UserRepository;
-use Illuminate\Http\Request;
+#use Illuminate\Http\Request;
 
 use CodeProject\Http\Requests;
-use CodeProject\Http\Controllers\Controller;
+#use CodeProject\Http\Controllers\Controller;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class UserController extends Controller
@@ -31,7 +31,7 @@ class UserController extends Controller
     {
         $userId = Authorizer::getResourceOwnerId();
         $rtrn = $this->repository->find($userId);
-        dd($rtrn);
+
         return $rtrn;
     }
 
