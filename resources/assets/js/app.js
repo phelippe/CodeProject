@@ -2,7 +2,7 @@ var app = angular.module('app', [
     'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
     'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal',
     'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
-    'mgcrea.ngStrap.navbar', 'ui.bootstrap.dropdown',
+    'ui.bootstrap.dropdown',
 ]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2', 'app.services']);
@@ -61,8 +61,10 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
 }]);
 
 app.config([
-    '$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigProvider',
-    function ($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
+    '$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider',
+    'appConfigProvider',
+    function ($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider,
+              appConfigProvider) {
 
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -70,8 +72,8 @@ app.config([
         $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
 
         //Removendo interceptors do angular-oauth e do http-auth-interceptor
-        $httpProvider.interceptors.splice(0,1);
-        $httpProvider.interceptors.splice(0,1);
+        $httpProvider.interceptors.splice(0, 1);
+        $httpProvider.interceptors.splice(0, 1);
 
         $httpProvider.interceptors.push('oauthFixInterceptor');
 
@@ -97,23 +99,29 @@ app.config([
             .when('/clientes', {
                 templateUrl: 'build/views/client/list.html',
                 controller: 'ClientListController',
+                title: 'Clientes',
             })
             .when('/clientes/new', {
                 templateUrl: 'build/views/client/new.html',
                 controller: 'ClientNewController',
+                title: 'Clientes',
             })
             .when('/clientes/:id/edit', {
                 templateUrl: 'build/views/client/edit.html',
                 controller: 'ClientEditController',
+                title: 'Clientes',
             })
             .when('/clientes/:id/delete', {
                 templateUrl: 'build/views/client/delete.html',
                 controller: 'ClientDeleteController',
+                title: 'Clientes',
             })
-            .when('/clientes/:id', {
+            //está dando problemas
+            /*.when('/clientes/:id', {
                 templateUrl: 'build/views/client/show.html',
                 controller: 'ClientShowController',
-            })
+                title: 'Clientes',
+            })*/
 
             //PROJETOS
             .when('/projetos', {
@@ -232,43 +240,52 @@ app.config([
 
 app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth',
     function ($rootScope, $location, $http, $modal, httpBuffer, OAuth) {
-    $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
-        if (nextRoute.$$route.originalPath != '/login') {
-            if (!OAuth.isAuthenticated()) {
-                $location.path('login');
+
+        $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+            if (nextRoute.$$route.originalPath != '/login') {
+                if (!OAuth.isAuthenticated()) {
+                    $location.path('login');
+                }
             }
-        }
-    });
+        });
 
-    $rootScope.$on('oauth:error', function (event, data) {
-        // Ignore `invalid_grant` error - should be catched on `LoginController`.
-        if ('invalid_grant' === data.rejection.data.error) {
-            return;
-        }
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 
-        // Refresh token when a `invalid_token` error occurs.
-        if ('access_denied' === data.rejection.data.error) {
-            /*if(!$rootScope.isRefreshingToken) {
-                $rootScope.isRefreshingToken = true;
-                return OAuth.getRefreshToken().then(function (response) {
-                    $rootScope.isRefreshingToken = false;
-                    return $http(data.rejection.config).then(function (response) {
-                        return data.deferred.resolve(response);
+            $rootScope.page_title = current.$$route.title;
+            //Pode ser pegando do title alí em cima ou do rootscope como abaixo
+            //$rootScope.page_title = current.$$route.page_title;
+
+        });
+
+        $rootScope.$on('oauth:error', function (event, data) {
+            // Ignore `invalid_grant` error - should be catched on `LoginController`.
+            if ('invalid_grant' === data.rejection.data.error) {
+                return;
+            }
+
+            // Refresh token when a `invalid_token` error occurs.
+            if ('access_denied' === data.rejection.data.error) {
+                /*if(!$rootScope.isRefreshingToken) {
+                 $rootScope.isRefreshingToken = true;
+                 return OAuth.getRefreshToken().then(function (response) {
+                 $rootScope.isRefreshingToken = false;
+                 return $http(data.rejection.config).then(function (response) {
+                 return data.deferred.resolve(response);
+                 });
+                 });
+                 }*/
+                httpBuffer.append(data.rejection.config, data.deferred);
+                if (!$rootScope.loginModalOpened) {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'build/views/templates/login-modal.html',
+                        controller: 'LoginModalController',
                     });
-                });
-            }*/
-            httpBuffer.append(data.rejection.config, data.deferred);
-            if(!$rootScope.loginModalOpened) {
-                var modalInstance = $modal.open({
-                    templateUrl: 'build/views/templates/login-modal.html',
-                    controller: 'LoginModalController',
-                });
-                $rootScope.loginModalOpened = true;
+                    $rootScope.loginModalOpened = true;
+                }
+                return;
             }
-            return;
-        }
 
-        // Redirect to `/login` with the `error_reason`.
-        return $location.path('login');
-    });
-}]);
+            // Redirect to `/login` with the `error_reason`.
+            return $location.path('login');
+        });
+    }]);

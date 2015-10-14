@@ -1,41 +1,52 @@
 angular.module('app.controllers')
-    .controller('ClientListController', ['$scope', 'Client', function ($scope, Client) {
-        $scope.clients = Client.query();
-    }])
-    .controller('ClientShowController', ['$scope', '$routeParams', 'Client', function ($scope, $routeParams, Client) {
-        $scope.client = Client.get({id: $routeParams.id});
-        $scope.page_title = 'Cliente';
-        $scope.btn_delete = 'Deletar';
-    }])
-    .controller('ClientNewController',
-    ['$scope', '$location', 'Client', function ($scope, $location, Client) {
-        $scope.client = new Client();
+    .controller('ClientListController', ['$rootScope', '$scope', 'Client',
+        function ($rootScope, $scope, Client) {
+            //$rootScope.page_title = 'Clientes';
+            $scope.clients = Client.query();
+        }])
+    .controller('ClientShowController', ['$rootScope', '$scope', '$routeParams', 'Client',
+        function ($rootScope, $scope, $routeParams, Client) {
+            //$rootScope.page_title = 'Cliente';
 
-        $scope.save = function () {
-            if($scope.form.$valid){
-                $scope.client.$save().then(function () {
+            $scope.client = Client.get({id: $routeParams.id});
+            $scope.btn_delete = 'Deletar';
+        }])
+    .controller('ClientNewController',
+    ['$rootScope', '$scope', '$location', 'Client',
+        function ($rootScope, $scope, $location, Client) {
+            //$rootScope.page_title = 'Novo cliente';
+
+            $scope.client = new Client();
+
+            $scope.save = function () {
+                if ($scope.form.$valid) {
+                    $scope.client.$save().then(function () {
+                        $location.path('/clientes');
+                    });
+                }
+            }
+        }])
+    .controller('ClientDeleteController',
+    ['$rootScope', '$scope', '$location', '$routeParams', 'Client',
+        function ($rootScope, $scope, $location, $routeParams, Client) {
+            //$rootScope.page_title = 'Deletar cliente';
+            $scope.client = new Client.get({id: $routeParams.id});
+
+            $scope.delete = function () {
+                $scope.client.$delete().then(function () {
                     $location.path('/clientes');
                 });
             }
-        }
-    }])
-    .controller('ClientDeleteController',
-    ['$scope', '$location', '$routeParams', 'Client', function ($scope, $location, $routeParams, Client) {
-        $scope.client = new Client.get({id: $routeParams.id});
-
-        $scope.delete = function () {
-            $scope.client.$delete().then(function(){
-                $location.path('/clientes');
-            });
-        }
-    }])
+        }])
     .controller('ClientEditController',
-    ['$scope', '$location', '$routeParams', 'Client', function ($scope, $location, $routeParams, Client) {
+    ['$rootScope', '$scope', '$location', '$routeParams', 'Client', function ($rootScope, $scope, $location, $routeParams, Client) {
+        //$rootScope.page_title = 'Editar ciente';
+
         $scope.client = Client.get({id: $routeParams.id});
 
         $scope.update = function () {
-            if($scope.form.$valid){
-                Client.update({id: $scope.client.id}, $scope.client, function(){
+            if ($scope.form.$valid) {
+                Client.update({id: $scope.client.id}, $scope.client, function () {
                     $location.path('/clientes');
                 });
             }
