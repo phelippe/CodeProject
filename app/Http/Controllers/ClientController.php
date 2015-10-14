@@ -27,9 +27,11 @@ class ClientController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->repository->all();
+        $limit = $request->query->get('limit', 15);
+        $rtrn = $this->repository->paginate($limit);
+        return $rtrn;
     }
 
     public function store(Request $request)

@@ -5,8 +5,8 @@ angular.module('app.services')
                 method: 'PUT'
             },
             query: {
-                method: 'GET',
-                isArray: true,
+                //method: 'GET',
+                isArray: false,
             },
         });
     }]);

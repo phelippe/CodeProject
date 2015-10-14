@@ -53,16 +53,23 @@ angular.module('app.controllers')
         }
     }])
     .controller('ClientDashboardController',
-    ['$rootScope', '$scope', '$location', '$routeParams', 'Client', function ($rootScope, $scope, $location, $routeParams, Client) {
-        //$rootScope.page_title = 'Editar ciente';
+    ['$rootScope', '$scope', '$location', '$routeParams', 'Client',
+        function ($rootScope, $scope, $location, $routeParams, Client) {
+            //$rootScope.page_title = 'Editar ciente';
 
-        $scope.client = Client.get({id: $routeParams.id});
+            $scope.client = {
 
-        $scope.update = function () {
-            if ($scope.form.$valid) {
-                Client.update({id: $scope.client.id}, $scope.client, function () {
-                    $location.path('/clientes');
-                });
-            }
-        }
-    }]);
+            };
+
+            $scope.clients = Client.query({
+                orderBy: 'created_at',
+                sortedBy: 'desc',
+                limit: 8,
+            }, function(response){
+                $scope.clients = response.data;
+            });
+
+            $scope.showClient = function(client){
+                $scope.client = client;
+            };
+        }]);

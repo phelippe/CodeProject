@@ -13,6 +13,8 @@ use CodeProject\Entities\ProjectFilePresenter;
 class ClientTransformer extends TransformerAbstract
 {
 
+    protected $defaultIncludes = ['projects'];
+
     /**
      * Transform the \ProjectFilePresenter entity
      * @param \ProjectFilePresenter $model
@@ -33,5 +35,15 @@ class ClientTransformer extends TransformerAbstract
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at
         ];
+    }
+
+    public function includeProjects(Client $client)
+    {
+        //return $this->collection($client->projects, new MemberTransformer());
+        //ou como abaixo
+
+        $transformer = new ProjectTransformer();
+        $transformer->setDefaultIncludes([]);
+        return $this->collection($client->projects, $transformer);
     }
 }

@@ -69,6 +69,7 @@
 		<script src="{{ asset('build/js/directives/loginForm.js') }}"></script>
 		<script src="{{ asset('build/js/directives/loadTemplate.js') }}"></script>
 		<script src="{{ asset('build/js/directives/menuActivated.js') }}"></script>
+		<script src="{{ asset('build/js/directives/tabProject.js') }}"></script>
 
 		{{--SERVICES--}}
 		<script src="{{ asset('build/js/services/url.js') }}"></script>
