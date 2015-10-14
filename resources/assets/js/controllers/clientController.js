@@ -51,4 +51,18 @@ angular.module('app.controllers')
                 });
             }
         }
+    }])
+    .controller('ClientDashboardController',
+    ['$rootScope', '$scope', '$location', '$routeParams', 'Client', function ($rootScope, $scope, $location, $routeParams, Client) {
+        //$rootScope.page_title = 'Editar ciente';
+
+        $scope.client = Client.get({id: $routeParams.id});
+
+        $scope.update = function () {
+            if ($scope.form.$valid) {
+                Client.update({id: $scope.client.id}, $scope.client, function () {
+                    $location.path('/clientes');
+                });
+            }
+        }
     }]);
