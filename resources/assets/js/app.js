@@ -247,13 +247,15 @@ app.config([
         });
     }]);
 
-app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth',
-    function ($rootScope, $location, $http, $modal, httpBuffer, OAuth) {
+app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth', 'authService',
+    function ($rootScope, $location, $http, $modal, httpBuffer, OAuth, authService) {
 
         $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
             if (nextRoute.$$route.originalPath != '/login') {
                 if (!OAuth.isAuthenticated()) {
                     $location.path('login');
+                } else {
+                    OAuth.getRefreshToken();
                 }
             }
         });
