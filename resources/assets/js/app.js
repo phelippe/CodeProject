@@ -123,10 +123,10 @@ app.config([
             })
             //está dando problemas
             /*.when('/clientes/:id', {
-                templateUrl: 'build/views/client/show.html',
-                controller: 'ClientShowController',
-                title: 'Clientes',
-            })*/
+             templateUrl: 'build/views/client/show.html',
+             controller: 'ClientShowController',
+             title: 'Clientes',
+             })*/
 
             //PROJETOS
             .when('/projetos', {
@@ -274,16 +274,8 @@ app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth',
 
             // Refresh token when a `invalid_token` error occurs.
             if ('access_denied' === data.rejection.data.error) {
-                /*if(!$rootScope.isRefreshingToken) {
-                 $rootScope.isRefreshingToken = true;
-                 return OAuth.getRefreshToken().then(function (response) {
-                 $rootScope.isRefreshingToken = false;
-                 return $http(data.rejection.config).then(function (response) {
-                 return data.deferred.resolve(response);
-                 });
-                 });
-                 }*/
                 httpBuffer.append(data.rejection.config, data.deferred);
+
                 if (!$rootScope.loginModalOpened) {
                     var modalInstance = $modal.open({
                         templateUrl: 'build/views/templates/login-modal.html',
