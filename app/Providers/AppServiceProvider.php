@@ -2,7 +2,9 @@
 
 namespace CodeProject\Providers;
 
-use CodeProject\Entities\Project;
+use CodeProject\Entities\ProjectTask;
+use CodeProject\Events\TaskWasIncluded;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
         /*Project::saved(function($project){
             dd($project);
         });*/
+
+        ProjectTask::created(function($task){
+            //event();
+            Event::fire(new TaskWasIncluded($task));
+        });
     }
 
     /**

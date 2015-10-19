@@ -2,7 +2,7 @@ var app = angular.module('app', [
     'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
     'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal',
     'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
-    'ui.bootstrap.dropdown',
+    'ui.bootstrap.dropdown', 'pusher-angular', 'ui-notification',
 ]);
 
 angular.module('app.controllers', ['ngMessages', 'angular-oauth2', 'app.services']);
@@ -13,6 +13,7 @@ angular.module('app.services', ['ngResource']);
 app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamSerializerProvider) {
     var config = {
         baseUrl: 'http://localhost:8000',
+        pusherKey: '7f7cffd807307b19213c',
         project: {
             status: [
                 {value: 1, label: 'Não iniciado'},
@@ -247,17 +248,44 @@ app.config([
         });
     }]);
 
-app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth', 'authService',
-    function ($rootScope, $location, $http, $modal, httpBuffer, OAuth, authService) {
+app.run(['$rootScope', '$location', '$http', '$modal', '$cookies', '$pusher', 'httpBuffer', 'OAuth', 'appConfig', 'Notification',
+    function ($rootScope, $location, $http, $modal, $cookies, $pusher, httpBuffer, OAuth, appConfig, Notification) {
+
+
+        $rootScope.$on('pusher-build', function (event, data) {
+            if (data.next.$$route.originalPath != '/login') {
+                if (OAuth.isAuthenticated()) {
+                    if (!window.client) {
+                        window.client = new Pusher(appConfig.pusherKey);
+                        var pusher = $pusher(window.client);
+                        var channel = pusher.subscribe('user.' + $cookies.getObject('user').id);
+                        channel.bind('CodeProject\\Events\\TaskWasIncluded',
+                            function (data) {
+                                /*var nome = data.task.name;
+                                Notification.success('Tarefa '+name+' foi incluída!');*/
+                                console.log(data);
+                            });
+                    }
+                }
+            }
+        });
+        $rootScope.$on('pusher-destroy', function (event, data) {
+            if(data.next.$$route.originalPath == '/login'){
+                if(window.client){
+                    window.client.disconnect();
+                    window.client = null;
+                }
+            }
+        });
 
         $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
             if (nextRoute.$$route.originalPath != '/login') {
                 if (!OAuth.isAuthenticated()) {
                     $location.path('login');
-                } else {
-                    OAuth.getRefreshToken();
                 }
             }
+            $rootScope.$emit('pusher-build', {next: nextRoute});
+            $rootScope.$emit('pusher-destroy', {next: nextRoute});
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
