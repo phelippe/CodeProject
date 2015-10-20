@@ -261,9 +261,9 @@ app.run(['$rootScope', '$location', '$http', '$modal', '$cookies', '$pusher', 'h
                         var channel = pusher.subscribe('user.' + $cookies.getObject('user').id);
                         channel.bind('CodeProject\\Events\\TaskWasIncluded',
                             function (data) {
-                                /*var nome = data.task.name;
-                                Notification.success('Tarefa '+name+' foi incluída!');*/
-                                console.log(data);
+                                var nome = data.task.name;
+                                Notification.success('Tarefa '+name+' foi incluída!');
+                                //console.log(data);
                             });
                     }
                 }

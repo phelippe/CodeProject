@@ -11,6 +11,7 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectTaskRepository;
 use CodeProject\Validators\ProjectTaskValidator;
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -58,9 +59,12 @@ class ProjectTaskService
         // disparar notificacao
         try {
             $data['project_id'] = $project_id;
-            $this->validator->with($data)->passesOrFail();
-            return $this->repository->create($data);
-        } catch(ValidatorException $e){
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
+
+            $rtrn = $this->repository->create($data);
+
+            return $rtrn;
+        } catch(Exception $e){
             return [
                 'error' => true,
                 'message' => $e->getMessageBag(),

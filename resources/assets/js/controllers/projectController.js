@@ -24,6 +24,7 @@ angular.module('app.controllers')
                     $scope.projects = data.data;
                     $scope.totalProjects = data.meta.pagination.total;
                     //console.log($scope.projects, $scope.totalProjects);
+                    console.log($scope.projects);
                 });
             }
 

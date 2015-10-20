@@ -49,7 +49,9 @@ class ProjectController extends Controller
             with(['client', 'tasks', 'notes', 'members'])->
             all()->members()->where(['user_id' => Authorizer::getResourceOwnerId()]);*/
         #return $this->service->index();
-        return $this->repository->findOwner(Authorizer::getResourceOwnerId(), $request->query->get('limit'));
+        $rtrn = $this->repository->findOwner(Authorizer::getResourceOwnerId(), $request->query->get('limit'));
+        #dd($rtrn);
+        return $rtrn;
     }
 
     /**
