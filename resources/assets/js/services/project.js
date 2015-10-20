@@ -32,6 +32,10 @@ angular.module('app.services')
             query: {
                 isArray: false,
             },
+            queryAsMember: {
+                isArray: false,
+                url: appConfig.baseUrl + '/project/list-as-member',
+            },
             update: {
                 method: 'PUT',
                 transformRequest: transformData,

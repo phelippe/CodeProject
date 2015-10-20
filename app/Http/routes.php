@@ -42,7 +42,11 @@ Route::group(['middleware'=>'oauth'], function(){
     Route::resource('client', 'ClientController', ['except'=>['create', 'edit']] );
 
     Route::group(['middleware'=>'check.project.permissions'], function(){
+
+        Route::get('project/list-as-member', 'ProjectController@indexAsMember');
         Route::resource('project', 'ProjectController', ['except'=>['create', 'edit']] );
+
+
         Route::resource('project.notes', 'ProjectNoteController', ['except'=>['create', 'edit']] );
         Route::resource('project.tasks', 'ProjectTaskController', ['except'=>['create', 'edit']] );
         Route::resource('project.members', 'ProjectMemberController', ['except'=>['create', 'edit', 'update']] );

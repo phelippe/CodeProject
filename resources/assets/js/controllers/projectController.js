@@ -24,7 +24,39 @@ angular.module('app.controllers')
                     $scope.projects = data.data;
                     $scope.totalProjects = data.meta.pagination.total;
                     //console.log($scope.projects, $scope.totalProjects);
-                    console.log($scope.projects);
+                });
+            }
+
+            getResultsPage(1);
+
+        }])
+    .controller('ProjectListAsMemberController', [
+        '$scope', '$routeParams', 'appConfig', 'Project', function ($scope, $routeParams, appConfig, Project) {
+            $scope.page_title = 'Listagem de projetos na qual <strong>VOCÊ É MEMBRO</strong>';
+
+            $scope.projects = [];
+            $scope.totalProjects = 0;
+            $scope.projectsPerPage = 10;
+
+            $scope.pagination = {
+                current: 1
+            };
+
+            $scope.pageChanged = function (newPage) {
+                //console.log(newPage);
+                getResultsPage(newPage);
+            };
+
+
+            function getResultsPage(pageNumber) {
+                $scope.projects = Project.queryAsMember({
+                    page: pageNumber,
+                    limit: $scope.projectsPerPage,
+                }, function (data) {
+                    $scope.projects = data.data;
+                    $scope.totalProjects = data.meta.pagination.total;
+                    //console.log($scope.projects, $scope.totalProjects);
+                    //console.log($scope.projects);
                 });
             }
 
@@ -32,8 +64,13 @@ angular.module('app.controllers')
 
         }])
     .controller('ProjectShowController', ['$scope', '$routeParams', 'Project', function ($scope, $routeParams, Project) {
-        $scope.project = Project.get({id_project: $routeParams.id_project});
+        $scope.project = Project.get({
+            id_project: $routeParams.id_project,
+            with: 'client,owner',
+        });
         $scope.page_title = 'Projeto';
+
+
     }])
     .controller('ProjectEditController',
     ['$scope', '$location', '$routeParams', 'Project', 'Client', 'appConfig', function ($scope, $location, $routeParams, Project, Client, appConfig) {

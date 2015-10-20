@@ -5,7 +5,7 @@ var app = angular.module('app', [
     'ui.bootstrap.dropdown', 'pusher-angular', 'ui-notification',
 ]);
 
-angular.module('app.controllers', ['ngMessages', 'angular-oauth2', 'app.services']);
+angular.module('app.controllers', ['ngMessages', 'angular-oauth2', 'app.services', 'ngSanitize']);
 angular.module('app.filters', []);
 angular.module('app.directives', []);
 angular.module('app.services', ['ngResource']);
@@ -133,6 +133,10 @@ app.config([
             .when('/projetos', {
                 templateUrl: 'build/views/project/list.html',
                 controller: 'ProjectListController',
+            })
+            .when('/projetos_membro', {
+                templateUrl: 'build/views/project/list-as-member.html',
+                controller: 'ProjectListAsMemberController',
             })
             .when('/projetos/dashboard', {
                 templateUrl: 'build/views/project/dashboard.html',
