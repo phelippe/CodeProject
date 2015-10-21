@@ -14,8 +14,8 @@ use League\Fractal\TransformerAbstract;
 
 class ProjectTransformer extends TransformerAbstract
 {
-    //protected $defaultIncludes = ['members', 'notes', 'tasks', 'files', 'client', 'owner'];
-    protected $avaliableIncludes = ['members', 'notes', 'tasks', 'files', 'client', 'owner'];
+    protected $defaultIncludes = ['members', 'notes', 'tasks', 'files', 'client', 'owner'];
+    //protected $avaliableIncludes = ['members', 'notes', 'tasks', 'files', 'client', 'owner'];
 
     public function transform(Project $project){
         return [

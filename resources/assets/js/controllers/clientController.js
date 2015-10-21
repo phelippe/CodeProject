@@ -2,7 +2,13 @@ angular.module('app.controllers')
     .controller('ClientListController', ['$rootScope', '$scope', 'Client',
         function ($rootScope, $scope, Client) {
             //$rootScope.page_title = 'Clientes';
-            $scope.clients = Client.query();
+            $scope.clients = Client.query({},
+                function (data) {
+                    $scope.clients = data.data;
+                    //$scope.totalProjects = data.meta.pagination.total;
+                    //console.log($scope.projects, $scope.totalProjects);
+                    //console.log($scope.projects);
+                });
         }])
     .controller('ClientShowController', ['$rootScope', '$scope', '$routeParams', 'Client',
         function ($rootScope, $scope, $routeParams, Client) {
@@ -57,19 +63,17 @@ angular.module('app.controllers')
         function ($rootScope, $scope, $location, $routeParams, Client) {
             //$rootScope.page_title = 'Editar ciente';
 
-            $scope.client = {
-
-            };
+            $scope.client = {};
 
             $scope.clients = Client.query({
                 orderBy: 'created_at',
                 sortedBy: 'desc',
                 limit: 8,
-            }, function(response){
+            }, function (response) {
                 $scope.clients = response.data;
             });
 
-            $scope.showClient = function(client){
+            $scope.showClient = function (client) {
                 $scope.client = client;
             };
         }]);
