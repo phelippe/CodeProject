@@ -31,10 +31,11 @@ class CheckProjectPermissions
     {
         $user_id = \Authorizer::getResourceOwnerId();
 
-        $rtrn = $this->repository->findWithOwnerAndMember($user_id);
+        $project_id = $request->project;
 
-        #dd($user_id, $rtrn);
-        if(count($rtrn)){
+        $rtrn = $this->repository->checkOwnershipAndMembership($user_id, $project_id);
+
+        if($rtrn){
             return $next($request);
         }
         return ['error'=>'Access forbidden'];
