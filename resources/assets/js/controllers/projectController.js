@@ -66,7 +66,7 @@ angular.module('app.controllers')
     .controller('ProjectShowController', ['$scope', '$routeParams', 'Project', function ($scope, $routeParams, Project) {
         $scope.project = Project.get({
             id_project: $routeParams.id_project,
-            with: 'client,owner',
+            //with: 'client,owner',
         });
         $scope.page_title = 'Projeto';
 

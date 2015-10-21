@@ -33,6 +33,7 @@ class CheckProjectPermissions
 
         $rtrn = $this->repository->findWithOwnerAndMember($user_id);
 
+        #dd($user_id, $rtrn);
         if(count($rtrn)){
             return $next($request);
         }

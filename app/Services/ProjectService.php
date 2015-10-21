@@ -73,6 +73,7 @@ class ProjectService
             //hidden nao funciona
             #$rtrn = $this->repository->with(['owner', 'client', 'notes', 'members', 'tasks'])->find($id);
             $rtrn = $this->repository->find($id);
+            #$rtrn = $this->repository->find($id)->members;
             #dd($rtrn);
             return $rtrn;
         } catch(ModelNotFoundException $e){
