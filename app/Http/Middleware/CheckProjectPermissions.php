@@ -35,12 +35,14 @@ class CheckProjectPermissions
 
         $rtrn = $this->repository->checkOwnershipAndMembership($user_id, $project_id);
 
+        #dd($user_id, $project_id, $rtrn);
         if($rtrn){
             return $next($request);
         }
-        return ['error'=>'Access forbidden'];
+        return ['error'=>'Access denied'];
 
 
+        #inutilizado abaixo
         $project_id = $request->project;
 
         /*if( $this->repository->isMember($project_id,$user_id) == false){

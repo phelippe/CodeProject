@@ -25,6 +25,10 @@ angular.module('app.services')
                             month = parseInt(arrayDate[1])-1;
                         //dei split na ultima parte pra remover as horas
                         o.due_date = new Date(arrayDate[0], month, arrayDate[2].split(' ', 1));
+                    } else if (o.hasOwnProperty('error')){
+                        console.log('tem erro');
+                    } else {
+
                     }
                     return o;
                 }

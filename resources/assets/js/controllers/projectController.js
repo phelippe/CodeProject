@@ -68,6 +68,8 @@ angular.module('app.controllers')
             id_project: $routeParams.id_project,
             //with: 'client,owner',
         });
+        //if($scope.project.data)
+        console.log($scope.project, $scope.project);
         $scope.page_title = 'Projeto';
 
 
