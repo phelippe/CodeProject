@@ -39,7 +39,8 @@ class CheckProjectPermissions
         if($rtrn){
             return $next($request);
         }
-        return ['error'=>'Access denied'];
+        //return ['error'=>'Access denied'];
+        abort(403, 'Você não tem permissão para acessar este projeto');
 
 
         #inutilizado abaixo

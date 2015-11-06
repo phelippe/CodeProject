@@ -63,13 +63,33 @@ angular.module('app.controllers')
             getResultsPage(1);
 
         }])
-    .controller('ProjectShowController', ['$scope', '$routeParams', 'Project', function ($scope, $routeParams, Project) {
-        $scope.project = Project.get({
+    .controller('ProjectShowController', ['$scope', '$routeParams', '$location', '$modal', 'Project', function ($scope, $routeParams, $location, $modal, Project) {
+        Project.get({
             id_project: $routeParams.id_project,
             //with: 'client,owner',
+        }, function (data) {
+            //console.log('success');
+            $scope.project = data;
+        }, function (data) {
+            //$scope.mensagem = data;
+            $scope.mensagem = 'Você não tem permissão para acessar';
+            $scope.close = function(){
+                //modalInstance.close()
+                $location.path('projetos');
+            }
+
+            var modalInstance = $modal.open({
+                templateUrl: 'build/views/templates/error-modal.html',
+                scope: $scope,
+            });
+
+            /*console.log('não pode acessar projeto');
+             alert('chamar a modal aqui e redirecionar para listagem ao clicar em OK');*/
         });
-        //if($scope.project.data)
-        console.log($scope.project, $scope.project);
+
+        $scope.cancel_modal = function () {
+            $location.path('projetos');
+        }
         $scope.page_title = 'Projeto';
 
 
@@ -189,9 +209,7 @@ angular.module('app.controllers')
 
             $scope.page_title = 'Dashboard';
 
-            $scope.project = {
-
-            };
+            $scope.project = {};
 
             $scope.projects = Project.query({
                 orderBy: 'created_at',
