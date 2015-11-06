@@ -75,7 +75,7 @@ class ProjectTaskService
     public function update(array $data, $project_id, $task_id){
         try {
             $data['project_id'] = $project_id;
-            $this->validator->with($data)->passesOrFail();
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
             return $this->repository->update($data, $task_id);
         } catch(ValidatorException $e){
             return [

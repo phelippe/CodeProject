@@ -263,19 +263,35 @@ app.run(['$rootScope', '$location', '$http', '$modal', '$cookies', '$pusher', 'h
                         window.client = new Pusher(appConfig.pusherKey);
                         var pusher = $pusher(window.client);
                         var channel = pusher.subscribe('user.' + $cookies.getObject('user').id);
-                        channel.bind('CodeProject\\Events\\TaskWasIncluded',
-                            function (data) {
-                                var nome = data.task.name;
-                                Notification.success('Tarefa '+name+' foi incluída!');
-                                //console.log(data);
-                            });
+                        channel.bind('CodeProject\\Events\\TaskWasIncluded', function (data) {
+                            console.log(data.task);
+                            var nome = data.task.name,
+                                inicio = data.task.start_date;
+
+                            Notification.success('Tarefa ' + nome + ' deverá ser iniciada:' + data.task.start_date);
+                            //console.log(data);
+                        });
+                        channel.bind('CodeProject\\Events\\TaskWasConcluded', function (data) {
+                            console.log(data.task);
+                            var nome = data.task.name
+
+                            Notification.success('Tarefa ' + nome + ' foi concluida');
+                            //console.log(data);
+                        });
+                        channel.bind('CodeProject\\Events\\TaskWasUpdated', function (data) {
+                            console.log(data.task);
+                            var nome = data.task.name
+
+                            Notification.warning('Tarefa ' + nome + ' foi alterada');
+                            //console.log(data);
+                        });
                     }
                 }
             }
         });
         $rootScope.$on('pusher-destroy', function (event, data) {
-            if(data.next.$$route.originalPath == '/login'){
-                if(window.client){
+            if (data.next.$$route.originalPath == '/login') {
+                if (window.client) {
                     window.client.disconnect();
                     window.client = null;
                 }

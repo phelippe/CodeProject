@@ -83,4 +83,9 @@ class ProjectTaskController extends Controller
     {
         return $this->service->destroy($project_id, $task_id);
     }
+
+    public function lastTasks(){
+        #dd($this->repository->paginate(6));
+        return $this->repository->paginate(6);
+    }
 }

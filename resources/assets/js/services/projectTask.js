@@ -41,6 +41,10 @@ angular.module('app.services')
                     return o;
                 }
             },
+            queryAll: {
+                method: 'GET',
+                isArray: false,
+            },
             save: {
                 method: 'POST',
                 transformRequest: transformData,

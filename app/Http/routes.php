@@ -44,8 +44,9 @@ Route::group(['middleware'=>'oauth'], function(){
     #Route::group(['middleware'=>'check.project.permissions'], function(){
 
         Route::get('project/list-as-member', 'ProjectController@indexAsMember');
-        Route::resource('project', 'ProjectController', ['except'=>['create', 'edit']] );
 
+        Route::get('project/tasks', 'ProjectTaskController@lastTasks');
+        Route::resource('project', 'ProjectController', ['except'=>['create', 'edit']] );
 
         Route::resource('project.notes', 'ProjectNoteController', ['except'=>['create', 'edit']] );
         Route::resource('project.tasks', 'ProjectTaskController', ['except'=>['create', 'edit']] );

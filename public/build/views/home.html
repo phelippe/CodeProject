@@ -92,11 +92,11 @@
                         <div class="clearfix">
                             <img src="build/images/avatar.png" alt="" class="avatar-sm rounded" />
                             <p>
-                                <strong>Uma tarefa nova foi incluída</strong>
+                                <strong>{{o.name}}</strong>
                                 <br/>
-                                <small>há alguns segundos</small>
+                                <small>Início: {{o.start_date | dateBr}}</small>
                                 <br/>
-                                <span class="text-info">{{o.name}}</span>
+                                <span class="text-info">Projeto {{o.project_id}}</span>
                             </p>
                         </div>
                     </div>
