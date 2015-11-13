@@ -48,15 +48,9 @@ class ClientService
         // enviar email
         // disparar notificacao
         // postar tweet
-        try {
-            $this->validator->with($data)->passesOrFail();
-            return $this->repository->create($data);
-        } catch(ValidatorException $e){
-            return [
-                'error' => true,
-                'message' => $e->getMessageBag(),
-            ];
-        }
+        $this->validator->with($data)->passesOrFail();
+
+        return $this->repository->create($data);
     }
 
     public function update(array $data, $id){

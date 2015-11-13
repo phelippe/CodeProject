@@ -2,7 +2,15 @@
     <h3 class="modal-title">Erro</h3>
 </div>
 <div class="modal-body">
-    {{mensagem}}
+    <!--FEITO EM CLIENT NEW (ver também o controller para ver como ficou a estrutura)-->
+    <div ng-repeat="(g, v) in errors">
+        <strong class="text-capitalize">{{g}}:</strong>
+        <ul>
+            <li ng-repeat="m in v">
+                {{m}}
+            </li>
+        </ul>
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-danger" type="button" ng-click="close()">Continuar</button>

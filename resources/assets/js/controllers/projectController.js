@@ -95,7 +95,7 @@ angular.module('app.controllers')
 
     }])
     .controller('ProjectEditController',
-    ['$scope', '$location', '$routeParams', 'Project', 'Client', 'appConfig', function ($scope, $location, $routeParams, Project, Client, appConfig) {
+    ['$scope', '$location', '$routeParams', '$q', '$filter', 'Project', 'Client', 'appConfig', function ($scope, $location, $routeParams, $q, $filter, Project, Client, appConfig) {
 
         $scope.page_title = 'Editar projeto';
         $scope.btn_text = 'Editar';
@@ -117,10 +117,17 @@ angular.module('app.controllers')
         }
 
         $scope.getClients = function (name) {
-            return Client.query({
+            var deffered = $q.defer();
+            Client.query({
                 search: name,
                 searchFields: 'name:like',
-            }).$promise;
+            }, function(data){
+                var result = $filter('limitTo')(data.data, 10);
+                deffered.resolve();
+            }, function(error){
+                deffered.reject(error);
+            });
+            return deffered.promise;
         }
 
         $scope.selectClient = function (item) {
@@ -139,11 +146,14 @@ angular.module('app.controllers')
 
     }])
     .controller('ProjectNewController',
-    ['$scope', '$location', 'Project', '$http', 'appConfig', '$routeParams', 'Client', 'User', '$cookies',
-        function ($scope, $location, Project, $http, appConfig, $routeParams, Client, User, $cookies) {
+    ['$scope', '$location', '$q','Project', '$http', 'appConfig', '$routeParams', 'Client', 'User', '$cookies',
+        function ($scope, $location, $q, Project, $http, appConfig, $routeParams, Client, User, $cookies) {
 
             $scope.project = new Project();
             $scope.status = appConfig.project.status;
+
+            //$scope.project.client_id = 1;
+            //$scope.client_selected = {id: 1, name: 'teste'};
 
             $scope.page_title = 'Novo projeto';
             $scope.btn_text = 'Cadastrar';
@@ -175,10 +185,16 @@ angular.module('app.controllers')
             }
 
             $scope.getClients = function (name) {
-                return Client.query({
+                var deffered = $q.defer();
+                Client.query({
                     search: name,
                     searchFields: 'name:like',
-                }).$promise;
+                }, function(data){
+                    deffered.resolve(data.data);
+                }, function(error){
+                    deffered.reject(error);
+                });
+                return deffered.promise;
             }
 
             $scope.selectClient = function (item) {

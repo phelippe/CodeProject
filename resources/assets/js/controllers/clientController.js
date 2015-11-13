@@ -18,8 +18,8 @@ angular.module('app.controllers')
             $scope.btn_delete = 'Deletar';
         }])
     .controller('ClientNewController',
-    ['$rootScope', '$scope', '$location', 'Client',
-        function ($rootScope, $scope, $location, Client) {
+    ['$rootScope', '$scope', '$location', '$modal', 'Client',
+        function ($rootScope, $scope, $location, $modal, Client) {
             //$rootScope.page_title = 'Novo cliente';
 
             $scope.client = new Client();
@@ -28,6 +28,18 @@ angular.module('app.controllers')
                 if ($scope.form.$valid) {
                     $scope.client.$save().then(function () {
                         $location.path('/clientes');
+                    }, function(error){
+                        $scope.errors = error.data.mensagens;
+
+                        $scope.close = function(){
+                            modalInstance.close()
+                        }
+
+                        var modalInstance = $modal.open({
+                            templateUrl: 'build/views/templates/error-modal.html',
+                            scope: $scope,
+                        });
+
                     });
                 }
             }
