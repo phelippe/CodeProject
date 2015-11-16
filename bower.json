@@ -33,6 +33,7 @@
     "pusher": "~3.0.0",
     "pusher-angular": "~0.1.8",
     "angular-ui-notification": "~0.0.14",
-    "angular-sanitize": "~1.4.7"
+    "angular-sanitize": "~1.4.7",
+    "blob-util": "~1.1.2"
   }
 }

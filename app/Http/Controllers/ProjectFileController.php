@@ -4,6 +4,7 @@ namespace CodeProject\Http\Controllers;
 
 use CodeProject\Repositories\ProjectFileRepository;
 use CodeProject\Services\ProjectFileService;
+use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Http\Request;
 
 use CodeProject\Http\Requests;
@@ -17,12 +18,18 @@ class ProjectFileController extends Controller
     private $repository;
 
     /**
+     * @var \Illuminate\Contracts\Filesystem\Factory
+     */
+    private $storage;
+
+    /**
      * @param ProjectFileService $service
      * @param ProjectFileRepository $repository
      */
-    public function __construct(ProjectFileService $service, ProjectFileRepository $repository){
+    public function __construct(ProjectFileService $service, ProjectFileRepository $repository, Factory $storage){
         $this->service = $service;
         $this->repository = $repository;
+        $this->storage = $storage;
     }
 
     /**
@@ -104,6 +111,8 @@ class ProjectFileController extends Controller
         }*/
         #return response()->download($this->service->show($file_id));
 
+        $model = $this->repository->skipPresenter()->find($file_id);
+
         $file_path = $this->service->show($file_id);
         $file_content = file_get_contents($file_path);
         $file64 = base64_encode($file_content);
@@ -111,6 +120,7 @@ class ProjectFileController extends Controller
             'file' => $file64,
             'size' => filesize($file_path),
             'name' => $this->service->getFileName($file_id),
+            'mime_type' => $this->storage->mimeType($this->service->getFileName($file_id)),
         ];
     }
 
