@@ -7,13 +7,14 @@ angular.module('app.services')
             /*save: {
                 method: 'POST',
             },
-            get: {
-                isArray: true,
-            },
+
             query: {
                 method: 'GET',
                 //isArray: true,
             },*/
+            get: {
+                isArray: true,
+            },
             update: {
                 method: 'PUT',
             },

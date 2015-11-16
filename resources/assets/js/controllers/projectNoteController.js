@@ -1,11 +1,26 @@
 angular.module('app.controllers')
-    .controller('ProjectNoteListController', ['$scope', '$routeParams', 'ProjectNote', function ($scope, $routeParams, ProjectNote) {
+    .controller('ProjectNoteListController', ['$scope', '$routeParams', '$compile', '$http', '$timeout', '$window', 'ProjectNote',
+        function ($scope, $routeParams, $compile, $http, $timeout, $window, ProjectNote) {
         $scope.notes = ProjectNote.query({id_project: $routeParams.id_project});
         $scope.page_title = 'Listagem de notas de projeto';
+
+        $scope.print = function (note) {
+            $http.get('/build/views/templates/projectNoteShow.html').then(function (response) {
+                $scope.note = note;
+                var div = $('<div/>');
+                div.html($compile(response.data)($scope));
+                $timeout(function(){
+                    var frame = $window.open('', '_blank', 'width=500, height=500');
+                    frame.document.open();
+                    frame.document.write(div.html());
+                    frame.document.close();
+                });
+            });
+        }
+
     }])
-    .controller('ProjectNoteShowController', ['$scope', '$routeParams', 'ProjectNote', function ($scope, $routeParams, ProjectNote) {
-        $scope.note = ProjectNote.get({id_project: $routeParams.id_project, id_note: $routeParams.id_note});
-        $scope.page_title = 'Nota';
+    .controller('ProjectNoteShowController', ['$scope', function ($scope) {
+        //$scope.page_title = 'Nota';
     }])
     .controller('ProjectNoteEditController',
     ['$scope', '$location', '$routeParams', 'ProjectNote', function ($scope, $location, $routeParams, ProjectNote) {
